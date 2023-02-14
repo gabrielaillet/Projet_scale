@@ -1,0 +1,21 @@
+<html>
+<head>
+    <title>Sport management</title>
+</head>
+<body>
+    {% for sport in sports %}
+        {{ sport.name }}
+    <ul>
+        {% for team in sport.teams %}
+            <li>{{ team.name }}
+            <ul>
+                {% for player in team.players %}
+                    <li>{{ player.firstname }} {{ player.lastname }}</li>
+                {% endfor %}
+            </ul>
+            </li>
+        {% endfor %}
+    </ul>
+    {% endfor %}
+</body>
+</html>
