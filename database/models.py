@@ -1,22 +1,38 @@
 from database.database import db
 
 
-class studen(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
+class student(db.Model):
+    student_id = db.Column('id',db.Integer, primary_key=True)
     name = db.Column(db.Text)
     surname = db.Column(db.Text)
 
 
-class Taf(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
+
+
+class taf(db.Model):
+    taf_id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.Text)
     code = db.Column(db.Text)
 
 class taf_student(db.Model):
-    student_id = db.Column(db.Integer, db.ForeignKey('student.id'),primary_key=True)
-    TAF_id = db.Column(db.Integer, db.ForeignKey('id.id'),primary_key=True)
-    Année = db.Column('Année',db.Integer,primary_key=True)
+    student_id = db.Column(db.Integer,primary_key=True, nullable=False)
+    taf_id = db.Column(db.Integer,primary_key=True)
+    year = db.Column(db.Integer,primary_key=True)
 
-                          ,
+class class_prom(db.Model):
+    student_id = db.Column(db.Integer, db.ForeignKey('student.id'), primary_key=True)
+    year = db.Column(db.Integer, primary_key=True)
+
+class entreprise(db.Model):
+    entreprise_id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.Text)
+
+class stage(db.Model):
+    stage_id = db.Column(db.Integer, primary_key=True)
+    student_id =   db.Column(db.Integer)
+    entreprise_id = db.Column(db.Integer)
+    description = db.Column(db.Text)
+
+
 
 

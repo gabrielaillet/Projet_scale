@@ -3,19 +3,19 @@
     <title>Sport management</title>
 </head>
 <body>
-    {% for sport in sports %}
-        {{ sport.name }}
-    <ul>
-        {% for team in sport.teams %}
-            <li>{{ team.name }}
-            <ul>
-                {% for player in team.players %}
-                    <li>{{ player.firstname }} {{ player.lastname }}</li>
-                {% endfor %}
-            </ul>
-            </li>
-        {% endfor %}
-    </ul>
+    <title>Student</title>
+    {% for student in Students %}
+        <div>{{ student.name }} {{ student.surname }}{{ student.id }}</div>
     {% endfor %}
+    <title>Taf</title>
+    {% for taf in Taf %}
+        <div>{{ taf.name }} {{ taf.code }}{{ taf.id }}</div>
+    {% endfor %}
+    {% for ts in TafStudent %}
+        <div>{{ ts.student_id }} {{ ts.taf_id }}{{ ts.year }}</div>
+    {% endfor %}
+        <form action={{url_for("add_record")}}>
+            <input type="submit" value="Add to db" />
+        </form>
 </body>
 </html>

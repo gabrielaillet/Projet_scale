@@ -1,0 +1,47 @@
+
+<html><head><link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body>
+<form action="{{url_for("add_record")}}" method="post">
+    <label>Add Taff Students </label>
+    {{ formTafStudent.hidden_tag() }}
+    <div>
+    <label for="year">id_student: </label>
+        {{ formTafStudent.student_id }}
+        <label for="year">id_taf: </label>
+        {{ formTafStudent.taf_id }}
+        <label for="year">year: </label>
+        {{ formTafStudent.year }}
+  </div>
+    <input type="submit">
+</form>
+
+<form action="{{url_for("add_record")}}" method="post">
+    <label>Add Student </label>
+    {{ formStudent.hidden_tag() }}
+    <div>
+    <label for="year">name</label>
+        {{ formStudent.name }}
+        <label for="year">surname</label>
+        {{ formStudent.surname }}
+  </div>
+    <input type="submit">
+</form>
+
+<form action="{{url_for("add_record")}}" method="post">
+    <label>Add Taf </label>
+    {{ formTaf.hidden_tag() }}
+    <div>
+    <label for="year">code </label>
+        {{ formTaf.code }}
+        <label for="year">name  </label>
+        {{formTaf.name }}
+  </div>
+    <input type="submit">
+</form>
+<form action={{url_for("clean")}}>
+            <input type="submit" value="watch db" />
+        </form>
+</body>
+</body>
+</html>
