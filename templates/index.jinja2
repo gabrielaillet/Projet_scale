@@ -1,21 +1,65 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8">
+    <!-- Mise à l'echelle pour les navigateurs mobiles -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- CSS de Bootstrap -->
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+  </head>
+</html>
+
 <html>
-<head>
-    <title>Sport management</title>
-</head>
-<body>
-    <title>Student</title>
-    {% for student in Students %}
-        <div>{{ student.name }} {{ student.surname }}{{ student.id }}</div>
-    {% endfor %}
-    <title>Taf</title>
-    {% for taf in Taf %}
-        <div>{{ taf.name }} {{ taf.code }}{{ taf.id }}</div>
-    {% endfor %}
-    {% for ts in TafStudent %}
-        <div>{{ ts.student_id }} {{ ts.taf_id }}{{ ts.year }}</div>
-    {% endfor %}
-        <form action={{url_for("add_record")}}>
-            <input type="submit" value="Add to db" />
-        </form>
-</body>
+    <head>
+        <title>Annuaire Alumni</title>
+    </head>
+    <body>
+        <header>
+            <nav class="navbar navbar-expand-lg navbar-dark bg-dark" style ="padding-left: 8px; padding-right: 8px;">
+                <img src="../static/image/IMT_Logo_fond_noir.png" width="10%">
+                <a class="navbar-brand" href="#">Annuaire Alumni</a>
+                    <button class="navbar-toggler " type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                <div class="collapse navbar-collapse justify-content-center" id="navbarNavAltMarkup">
+                    <div class="navbar-nav">
+                      <a class="nav-item nav-link active" href="#">Tableau de bord</a>
+                      <a class="nav-item nav-link" href="#">Promotion</a>
+                      <a class="nav-item nav-link" href="#">TAF</a>
+                    </div>
+                </div>
+                <div class="collapse navbar-collapse justify-content-end" id="navbarNavAltMarkup2">
+                    <button class="btn btn-outline-success " type="submit">Se connecter</button>
+                </div>
+            </nav>
+        </header>
+            <br>
+            <div class="container">
+            <table class="table table-dark">
+                <thead>
+                    <tr>
+                        <th>Nom</th>
+                        <th>Prénom</th>
+                        <th>TAF</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for student in Students %}
+                    <tr>
+                        <td>{{ student.surname }}</td>
+                        <td>{{ student.name }}</td>
+                        <td>{% for taf in Taf %}
+                                {% if student.id == taf.student_id %}
+                                    {{ taf.name }}
+                                {% endif %}
+                            {% endfor %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            </div>
+    </body>
 </html>

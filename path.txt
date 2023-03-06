@@ -1,2 +1,2 @@
-YVES : "sqlite:///C:\\Users\\Yves\\Desktop\\WEB\\Projet_scale\\database\\database.db"
+YVES : "sqlite:///C:\\Users\\Yves\\Desktop\\WEB\\Projet_scale-master\\database\\database.db"
 GABRIEL :"sqlite:///C:\\Users\\DELL\\Downloads\\ue_web_example-tp_relations_flask\\database\\database.db"
