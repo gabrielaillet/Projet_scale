@@ -51,9 +51,13 @@
                         <td>{{ student.surname }}</td>
                         <td>{{ student.name }}</td>
                         <td>{% for taf in Taf %}
-                                {% if student.id == taf.student_id %}
-                                    {{ taf.name }}
-                                {% endif %}
+                                {% for tafstud in TafStudent %}
+                                    {% if student.student_id == tafstud.student_id %}
+                                        {% if taf.taf_id == tafstud.taf_id %}
+                                            {{ taf.name }}
+                                        {% endif %}
+                                    {% endif %}
+                                {% endfor %}
                             {% endfor %}
                         </td>
                     </tr>

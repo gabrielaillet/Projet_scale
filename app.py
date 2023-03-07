@@ -22,13 +22,15 @@ def populate_database():
     Entreprise = entreprise(name="entreprise test")
     Stage = stage(student_id = 1, entreprise_id = 1, description="lorem ipsum")
     Stage2 = stage(student_id=2, entreprise_id=1, description="lorem ipsum2")
-    Taf = taf(name="develloppement logiciel",code="DCL")
+    Taf = taf(name="developpement logiciel",code="DCL")
+    Taf2 = taf(name="developpement2", code="DCL")
     studentTaf = taf_student(student_id=1,taf_id=1,year=2022)
     studentTaf2 = taf_student(student_id=2, taf_id=2, year=2024)
 
     db.session.add(Student)
     db.session.add(Student2)
     db.session.add(Taf)
+    db.session.add(Taf2)
     db.session.add(Stage)
     db.session.add(Stage2)
     db.session.add(Entreprise)
@@ -43,9 +45,9 @@ def populate_database():
 
 app = flask.Flask(__name__)
 app.config["SECRET_KEY"] = "secret_key1234"
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///C:\\Users\\Yves\\Desktop\\WEB\\Projet_scale-master\\database\\database.db"
+app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///C:\\Users\\DELL\\Downloads\\ue_web_example-tp_relations_flask\\database\\database.db"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
-engine = create_engine("sqlite:///C:\\Users\\Yves\\Desktop\\WEB\\Projet_scale-master\\database\\database.db, connect_args={'foreign_keys': True})")
+engine = create_engine("sqlite:///C:\\Users\\DELL\\Downloads\\ue_web_example-tp_relations_flask\\database\\database.db, connect_args={'foreign_keys': True})")
 
 db.init_app(app) # (1) flask prend en compte la base de donnee
 with app.test_request_context(): # (2) bloc execute a l'initialisation de Flask
