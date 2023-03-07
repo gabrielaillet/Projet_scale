@@ -30,9 +30,9 @@
                       <a class="nav-item nav-link" href="#">TAF</a>
                     </div>
                 </div>
-                <div class="collapse navbar-collapse justify-content-end" id="navbarNavAltMarkup2">
-                    <button class="btn btn-outline-success " type="submit">Se connecter</button>
-                </div>
+                <form class="collapse navbar-collapse justify-content-end" id="navbarNavAltMarkup2" action={{url_for("connection")}}>
+                    <input class="btn btn-outline-success " type="submit" value = "Se connecter">
+                </form>
             </nav>
         </header>
             <br>
