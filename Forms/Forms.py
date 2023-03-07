@@ -78,4 +78,5 @@ class ProfileEtudiant(FlaskForm):
     poste = StringField('code')
     taf = StringField('code')
 
-    __init__()
+def truc():
+
