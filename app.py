@@ -48,9 +48,9 @@ def populate_database():
 
 app = flask.Flask(__name__)
 app.config["SECRET_KEY"] = "secret_key1234"
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///C:\\Users\\DELL\\Downloads\\ue_web_example-tp_relations_flask\\database\\database.db"
+app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///C:\\Users\\Yves\\Desktop\\WEB\\Projet_scale-master\\database\\database.db"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
-engine = create_engine("sqlite:///C:\\Users\\DELL\\Downloads\\ue_web_example-tp_relations_flask\\database\\database.db, connect_args={'foreign_keys': True})")
+engine = create_engine("sqlite:///C:\\Users\\Yves\\Desktop\\WEB\\Projet_scale-master\\database\\database.db, connect_args={'foreign_keys': True})")
 
 db.init_app(app) # (1) flask prend en compte la base de donnee
 with app.test_request_context(): # (2) bloc execute a l'initialisation de Flask
@@ -96,6 +96,10 @@ def clean():
     Taf = taf.query.all()
     TafStudent = taf_student.query.all()
     return render_template('index.jinja2',TafofStudent=TafofStudent, Students=Student,Taf=Taf,TafStudent=TafStudent)
+
+@app.route("/connection",methods=["GET", "POST"])
+def connection():
+    return render_template('connection.jinja2')
 
 
 if __name__ == '__main__':

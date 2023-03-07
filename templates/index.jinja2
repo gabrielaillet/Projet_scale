@@ -1,20 +1,15 @@
 <!doctype html>
 <html lang="fr">
-  <head>
-    <meta charset="utf-8">
-    <!-- Mise à l'echelle pour les navigateurs mobiles -->
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-    <!-- CSS de Bootstrap -->
-	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-
-  </head>
-</html>
-
-<html>
     <head>
+        <meta charset="utf-8">
+        <!-- Mise à l'echelle pour les navigateurs mobiles -->
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+        <!-- CSS de Bootstrap -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
         <title>Annuaire Alumni</title>
     </head>
+
     <body>
         <header>
             <nav class="navbar navbar-expand-lg navbar-dark bg-dark" style ="padding-left: 8px; padding-right: 8px;">
@@ -28,11 +23,12 @@
                       <a class="nav-item nav-link active" href="#">Tableau de bord</a>
                       <a class="nav-item nav-link" href="#">Promotion</a>
                       <a class="nav-item nav-link" href="#">TAF</a>
+                      <a class="nav-item nav-link" href="#">Fiche</a>
                     </div>
                 </div>
-                <div class="collapse navbar-collapse justify-content-end" id="navbarNavAltMarkup2">
-                    <button class="btn btn-outline-success " type="submit">Se connecter</button>
-                </div>
+                <form class="collapse navbar-collapse justify-content-end" id="navbarNavAltMarkup2" action={{url_for("connection")}}>
+                    <input class="btn btn-outline-success " type="submit" value = "Se connecter">
+                </form>
             </nav>
         </header>
             <br>
@@ -43,7 +39,6 @@
                         <th>Nom</th>
                         <th>Prénom</th>
                         <th>TAF</th>
-                        <th>Année</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -51,31 +46,17 @@
                     <tr>
                         <td>{{ student.surname }}</td>
                         <td>{{ student.name }}</td>
-                        <td>
-                            {% for tafofstudent in TafofStudent %}
-                                {%if tafofstudent[0] == student.student_id%}
-                                    {% if tafofstudent[1] |length ==0 %}
-                                        <div>{{'Pas de Taf'}}</div>
-                                    {% else %}
-                                    {% for taf in tafofstudent[1] %}
-                                        <div>{{ taf.name }}</div>
-                                    {% endfor %}
+                        <td>{% for taf in Taf %}
+                                {% for tafstud in TafStudent %}
+                                    {% if student.student_id == tafstud.student_id %}
+                                        {% if taf.taf_id == tafstud.taf_id %}
+                                            {{ taf.name }}
                                         {% endif %}
-                                {% endif %}
+                                    {% endif %}
+                                {% endfor %}
                             {% endfor %}
-                    <td>
-
-                        {% for studentTaf in TafStudent%}
-                            {%if studentTaf.student_id == student.student_id %}
-                             <div>{{ studentTaf.year }}</div>
-                            {% endif %}
-
-
-                        {% endfor %}
-                    </td>
+                        </td>
                     </tr>
-
-
                     {% endfor %}
                 </tbody>
             </table>
