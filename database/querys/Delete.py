@@ -2,6 +2,7 @@ import sys
 
 from database.database import db
 from database.querys.Get import *
+from database.querys.Delete import *
 def delStudent(id):
     Student = getStudentById(id)
     db.session.delete(Student)
@@ -21,8 +22,11 @@ def delClassProm(idStudent,year):
     db.session.delete(ClassProm)
     db.session.commit()
 
+
+
+
 def delEntreprise(idEntreprise):
-    Entreprise = getEntreprise(idEntreprise)
+    Entreprise = getEntrepriseById(idEntreprise)
     db.session.delete((Entreprise))
     db.session.commit()
 

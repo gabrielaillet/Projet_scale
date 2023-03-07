@@ -68,3 +68,7 @@ def getStudentByTafYear(code_taf,yearStart,yearEnd):
         Studentids += [listStudentTaf[i].student_id]
     Student = student.query.filter(student.student_id.in_(Studentids)).all()
     return Student
+
+def getProfileByIdStudent(IdStudent):
+    Profile = profile.query.filter_by(student_id = IdStudent).first()
+    return Profile

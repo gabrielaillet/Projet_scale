@@ -6,6 +6,11 @@ class student(db.Model):
     name = db.Column(db.Text)
     surname = db.Column(db.Text)
 
+class profile(db.Model):
+    student_id = db.Column('id',db.Integer, primary_key=True)
+    email = db.Column(db.Text)
+    etat_civil = db.Column(db.Text)
+    post = db.Column(db.Text)
 
 
 
