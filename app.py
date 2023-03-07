@@ -12,6 +12,7 @@ from database.querys.Add import *
 from database.models import *
 from database.database import init_database
 from database.querys.Delete import delStudent
+from database.querys.change import ChangeProfile
 
 
 def populate_database():
@@ -57,6 +58,13 @@ with app.test_request_context(): # (2) bloc execute a l'initialisation de Flask
     populate_database()
 
 
+@app.route("/client/<int:id>",methods=["GET", "POST"])
+def changeClientInfo(id):
+    formProfile = ProfileEtudiant()
+    if formProfile.validate_on_submit():
+        ChangeProfile(formProfile)
+        return flask.redirect("/")
+    return render_template('ChangePersonnaleData.jinja2',formProfile=formProfile)
 @app.route("/s",methods=["GET", "POST"])
 def add_record():
     formStudent = StudentForm()

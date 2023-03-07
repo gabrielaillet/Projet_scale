@@ -2,6 +2,8 @@
 <html><head><link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
 <body>
+<div class="card" style="width: 40rem;">
+    <div class="card-body">
 <form action="{{url_for("add_record")}}" method="post">
     <label>Add Taff Students </label>
     {{ formTafStudent.hidden_tag() }}
@@ -15,7 +17,8 @@
   </div>
     <input type="submit" value="test">
 </form>
-
+</div>
+</div>
 <form action="{{url_for("add_record")}}" method="post">
     <label>Add Student </label>
     {{ formStudent.hidden_tag() }}

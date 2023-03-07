@@ -1,0 +1,33 @@
+
+<html><head><link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body>
+<div class="card" style="width: 40rem;">
+    <div class="card-body">
+<form action="{{url_for("changeClientInfo", id=1)}}" method="post">
+    <label>Add Taff Students </label>
+    {{ formProfile.hidden_tag()}}
+    <div>
+    <label for="year">nom </label>
+        {{ formProfile.name}}
+        <label for="year">prenom </label>
+        {{ formProfile.surname}}
+        <label for="year">email </label>
+        {{ formProfile.email}}
+        <label for="year">anne </label>
+        {{ formProfile.etat_civilposte}}
+        <label for="year">poste </label>
+        {{ formProfile.poste}}
+        <label for="year">taf </label>
+        {{ formProfile.taf}}
+    <input type="submit">
+    </div>
+</form>
+
+<form action={{url_for("clean")}}>
+            <input type="submit" value="watch db" />
+</form>
+</div>
+</div>
+</body>
+</html>

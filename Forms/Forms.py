@@ -67,3 +67,15 @@ class StageForm(FlaskForm):
     student_id = IntegerField('id student',validators=[InputRequired()])
     entreprise_id = IntegerField('id student',validators=[InputRequired()])
     description = StringField('code')
+
+class ProfileEtudiant(FlaskForm):
+
+    student_id = HiddenField(default=1)
+    name = StringField('code')
+    surname = StringField('code')
+    email = StringField('code')
+    etat_civil = StringField('code')
+    poste = StringField('code')
+    taf = StringField('code')
+
+    __init__()
