@@ -1,6 +1,8 @@
 <!doctype html>
 <html lang="fr">
   <head>
+       <link rel="stylesheet" href="https://pyscript.net/alpha/pyscript.css" />
+      <script defer src="https://pyscript.net/alpha/pyscript.js"></script>
     <meta charset="utf-8">
     <!-- Mise à l'echelle pour les navigateurs mobiles -->
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -43,6 +45,7 @@
                         <th>Nom</th>
                         <th>Prénom</th>
                         <th>TAF</th>
+                        <th>Année</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -50,17 +53,31 @@
                     <tr>
                         <td>{{ student.surname }}</td>
                         <td>{{ student.name }}</td>
-                        <td>{% for taf in Taf %}
-                                {% for tafstud in TafStudent %}
-                                    {% if student.student_id == tafstud.student_id %}
-                                        {% if taf.taf_id == tafstud.taf_id %}
-                                            {{ taf.name }}
+                        <td>
+                            {% for tafofstudent in TafofStudent %}
+                                {%if tafofstudent[0] == student.student_id%}
+                                    {% if tafofstudent[1] |length ==0 %}
+                                        <div>{{'Pas de Taf'}}</div>
+                                    {% else %}
+                                    {% for taf in tafofstudent[1] %}
+                                        <div>{{ taf.name }}</div>
+                                    {% endfor %}
                                         {% endif %}
-                                    {% endif %}
-                                {% endfor %}
+                                {% endif %}
                             {% endfor %}
-                        </td>
+                    <td>
+
+                        {% for studentTaf in TafStudent%}
+                            {%if studentTaf.student_id == student.student_id %}
+                             <div>{{ studentTaf.year }}</div>
+                            {% endif %}
+
+
+                        {% endfor %}
+                    </td>
                     </tr>
+
+
                     {% endfor %}
                 </tbody>
             </table>

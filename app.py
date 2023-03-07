@@ -25,6 +25,7 @@ def populate_database():
     Taf = taf(name="developpement logiciel",code="DCL")
     Taf2 = taf(name="developpement2", code="DCL")
     studentTaf = taf_student(student_id=1,taf_id=1,year=2022)
+    studentTaf3 = taf_student(student_id=1, taf_id=2, year=2023)
     studentTaf2 = taf_student(student_id=2, taf_id=2, year=2024)
 
     db.session.add(Student)
@@ -37,6 +38,7 @@ def populate_database():
     db.session.commit()
     db.session.add(studentTaf)
     db.session.add(studentTaf2)
+    db.session.add(studentTaf3)
     db.session.commit()
 
 
@@ -73,17 +75,19 @@ def add_record():
         return flask.redirect("/")
     return render_template('test.jinja2.html',formTaf=formTaf,formStudent=formStudent ,formTafStudent=formTafStudent)
 
+def tafstudentid(idStudent):
+    return  render_template('index.jinja2', )
 
 
 
 
 @app.route("/",methods=["GET", "POST"])
 def clean():
-
+    TafofStudent = getAllTafOfStudent()
     Student = student.query.all()
     Taf = taf.query.all()
     TafStudent = taf_student.query.all()
-    return render_template('index.jinja2', Students=Student,Taf=Taf,TafStudent=TafStudent)
+    return render_template('index.jinja2',TafofStudent=TafofStudent, Students=Student,Taf=Taf,TafStudent=TafStudent)
 
 
 if __name__ == '__main__':
