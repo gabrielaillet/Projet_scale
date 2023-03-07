@@ -5,12 +5,26 @@ from database.models import *
 
 
 def getStudentById(idStudent):
-    Student = student.query.filter_by(id=idStudent).first()
+    Student = student.query.filter_by(student_id=idStudent).first()
     return Student
 def getTafById(idTaf):
-    Taf = taf.query.filter_by(id=idTaf).first()
+    Taf = taf.query.filter_by(taf_id=idTaf).first()
     return Taf
+def getTadOfStudentByStudentId(idStudent):
+    StudentTaf = taf_student.query.filter_by(student_id=idStudent).all()
+    Tafids = []
+    for i in range(len(StudentTaf)):
+        Tafids += [StudentTaf[i].taf_id]
 
+    tafs = taf.query.filter(taf.taf_id.in_(Tafids)).all()
+
+    return tafs
+def getAllTafOfStudent():
+    Student = student.query.all()
+    TafOfStudent = []
+    for i in range(len(Student)):
+        TafOfStudent += [[Student[i].student_id,getTadOfStudentByStudentId(Student[i].student_id)]]
+    return TafOfStudent
 def getTafStudent(idStudent,idTaf,year):
     TafStudent = taf_student.query.filter_by(student_id=idStudent,taf_id=idTaf,year=year).first()
     return TafStudent

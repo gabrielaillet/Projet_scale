@@ -10,7 +10,7 @@ class student(db.Model):
 
 
 class taf(db.Model):
-    taf_id = db.Column(db.Integer, primary_key=True)
+    taf_id: object = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.Text)
     code = db.Column(db.Text)
 
