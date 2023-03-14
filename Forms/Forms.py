@@ -89,3 +89,4 @@ class ProfileEtudiant(FlaskForm):
 
 
     taf4 = RadioField('code', choices=[],default="pas de taf",validators=[InputRequired(message="Please enter taf4")])
+
