@@ -52,8 +52,8 @@ def populate_database():
 
 app = flask.Flask(__name__)
 app.config["SECRET_KEY"] = "secret_key1234"
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///C:\\Users\\DELL\\Downloads\\ue_web_example-tp_relations_flask\\database\\database.db"
-engine = create_engine("sqlite:///C:\\Users\\DELL\\Downloads\\ue_web_example-tp_relations_flask\\database\\database.db, connect_args={'foreign_keys': True})")
+app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///C:\\Users\\Yves\\Desktop\\WEB\\Projet_scale-master\\database\\database.db"
+engine = create_engine("sqlite:///C:\\Users\\Yves\\Desktop\\WEB\\Projet_scale-master\\database\\database.db, connect_args={'foreign_keys': True})")
 
 db.init_app(app) # (1) flask prend en compte la base de donnee
 with app.test_request_context(): # (2) bloc execute a l'initialisation de Flask
@@ -137,6 +137,16 @@ def tableaux(name):
     Student = student.query.all()
     Taf = taf.query.all()
     TafStudent = taf_student.query.all()
+
+    NbreStudent = len(student.query.all())
+    NbreEntreprise = len(entreprise.query.all())
+    return render_template('index.jinja2',
+                           TafofStudent=TafofStudent,
+                           Students=Student,
+                           Taf=Taf,
+                           TafStudent=TafStudent,
+                           NbreStudent=NbreStudent,
+                           NbreEntreprise=NbreEntreprise)
 
     return render_template('index.jinja2',TafofStudent=TafofStudent, Students=Student,Taf=Taf,TafStudent=TafStudent,
                            name=name,id=int(name))
