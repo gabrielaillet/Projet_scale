@@ -13,9 +13,10 @@ def delTaf(id):
     db.session.commit()
 
 def delTafStudent(idStudent,idTaf,Year):
-    TafStudent = getTafStudentById(idStudent,idTaf,Year)
+    TafStudent = getTafStudent(idStudent,idTaf,Year)
     db.session.delete(TafStudent)
     db.session.commit()
+
 
 def delClassProm(idStudent,year):
     ClassProm = getClassProm(idStudent,year)
@@ -34,3 +35,4 @@ def delStage(idStage):
     Stage = getStageById(idStage)
     db.session.delete(Stage)
     db.session.commit()
+

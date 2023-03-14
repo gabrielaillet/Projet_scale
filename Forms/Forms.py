@@ -1,8 +1,11 @@
+from datetime import datetime
+
 from flask_wtf import FlaskForm
-from wtforms import HiddenField, StringField, SubmitField, IntegerField
+from wtforms import HiddenField, StringField, SubmitField, IntegerField, BooleanField, SelectMultipleField, RadioField, \
+    FieldList
 from wtforms.validators import InputRequired, Regexp, Length, ValidationError
 from database.querys.Get import *
-
+from wtforms import SelectField
 
 class StudentForm(FlaskForm):
     # id used only by update/edit
@@ -40,7 +43,7 @@ class TafStudentForm(FlaskForm):
 
     student_id = IntegerField('id student',validators=[InputRequired()])
     taf_id = StringField('code taf')
-    year = StringField('cod')
+    year = IntegerField('code')
 
     def validate_student_id(self,field):
         if(getStudentById(field.data)==None):
@@ -69,12 +72,21 @@ class StageForm(FlaskForm):
     description = StringField('code')
 
 class ProfileEtudiant(FlaskForm):
-
-    student_id = HiddenField(default=1)
+    student_id = IntegerField()
     name = StringField('code')
     surname = StringField('code')
     email = StringField('code')
-    etat_civil = StringField('code')
-    poste = StringField('code')
-    taf = StringField('code')
+    etat_civil = RadioField('code',choices=[('Mr', 'Mr'), ('Mme', 'Mme'), ('Autre', 'Autre')])
+    post = RadioField('code',choices=[('eleve', 'eleve'), ('enseignant', 'enseignant'), ('salarier', 'salarier'), ("chef d'entreprise", "chef d'entreprise")])
+
+    taf1 = RadioField('code',choices=[],default="pas de taf",validators=[InputRequired(message="Please enter taf1")])
+    year = IntegerField('Year')
+
+    taf2 = RadioField('code', choices=[],default="pas de taf",validators=[InputRequired(message="Please enter taf2")])
+
+
+    taf3 = RadioField('code', choices=[],default="pas de taf",validators=[InputRequired(message="Please enter taf3")])
+
+
+    taf4 = RadioField('code', choices=[],default="pas de taf",validators=[InputRequired(message="Please enter taf4")])
 
