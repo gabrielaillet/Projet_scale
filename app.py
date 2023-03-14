@@ -56,8 +56,7 @@ def populate_database():
 
 app = flask.Flask(__name__)
 app.config["SECRET_KEY"] = "secret_key1234"
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///C:\\Users\\Yves\\Desktop\\WEB\\Projet_scale-master\\database\\database.db"
-
+app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///C:\\Users\\DELL\\Downloads\\ue_web_example-tp_relations_flask\\database\\database.db"
 db.init_app(app) # (1) flask prend en compte la base de donnee
 with app.test_request_context(): # (2) bloc execute a l'initialisation de Flask
     init_database()
@@ -72,7 +71,7 @@ def showClientInfo(name,id):
     Profil = getProfileByIdStudent(id)
     Taf = getTadOfStudentByStudentId(id)
     """a faire : accordion"""
-    return render_template('afficherProfileUtilisateur.html', Student=Student,Profil=Profil,Taf=Taf ,Id=id,
+    return render_template('afficherProfileUtilisateur.html', Student=Student,Profil=Profil,Taf=Taf ,id=id,
                            classProm=ClassProm, currentYear=current_year,canModify=CanModify,name=name)
 
 
@@ -94,7 +93,7 @@ def changeClientInfo(name,id):
         formProfile.taf3.choices = getTafCode()
         formProfile.taf4.choices = getTafCode()
         formProfile.year.data = ClassProm.year
-        return render_template('ChangePersonnaleData.jinja2',formProfile=formProfile, Id=id,
+        return render_template('ChangePersonnaleData.jinja2',formProfile=formProfile, id=id,
                                classProm = ClassProm,currentYear=current_year,Namecompte=name)
     else:
 
@@ -111,7 +110,7 @@ def changeClientInfo(name,id):
             retu = "/"+name+"/"+"show"+"/"+str(id)+"/"
             return redirect(retu)
 
-        return render_template('ChangePersonnaleData.jinja2',methods="GET", formProfile=formProfile, Id=id,
+        return render_template('ChangePersonnaleData.jinja2',methods="GET", formProfile=formProfile, id=id,
                                classProm = ClassProm,currentYear=current_year,Namecompte=name)
 @app.route("/s",methods=["GET", "POST"])
 def add_record():
@@ -130,8 +129,7 @@ def add_record():
         return flask.redirect("/")
     return render_template('test.jinja2.html',formTaf=formTaf,formStudent=formStudent ,formTafStudent=formTafStudent)
 
-def tafstudentid(idStudent):
-    return  render_template('index.jinja2', )
+
 
 
 @app.route("/<string:name>",methods=["GET", "POST"])

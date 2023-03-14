@@ -9,8 +9,12 @@
             integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
             crossorigin="anonymous"></script>
     {% import 'accordion_year.jinja2' as ay %}
+    {% import 'navBar.jinja2' as nav %}
 </head>
 <body>
+<header>
+            {{ nav.renderNavBar(name,id) }}
+</header>
 <ul class="container">
     <div class="row">
         <div class="col-6 col-md-3">
@@ -23,7 +27,7 @@
         {% if name=="Admin" or canModify %}
          <div class="col-6 col-md-3">
 
-            <form class="justify-content-end" action={{url_for("changeClientInfo",name=name,id=Id)}}>
+            <form class="justify-content-end" action={{url_for("changeClientInfo",name=name,id=id)}}>
                 <input class="btn btn-outline-success " type="submit"  value = "Modify">
             </form>
             </div>
