@@ -62,7 +62,7 @@
                         <th>Année</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody id="search-table">
                     {% for student in Students %}
                     <tr>
                         <td>{{ student.surname }}</td>
@@ -92,6 +92,19 @@
                 </tbody>
             </table>
             </div>
+        <div class="mb-3">
+            <input type="text" class="form-control" placeholder="Recherchez un nom ou un prénom" aria-label="Recherchez un nom ou un prénom" aria-describedby="button-addon2" id="search-input">
+        </div>
     </body>
+    <script>
+  $(document).ready(function(){
+    $('#search-input').on('keyup', function(){
+      var value = $(this).val().toLowerCase();
+      $('#search-table tr').filter(function(){
+        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+      });
+    });
+  });
+</script>
 </html>
 
