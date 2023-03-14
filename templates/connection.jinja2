@@ -11,8 +11,10 @@
       <img src="../static/image/IMT_Logo_fond_noir.png" alt="logo_imt_noir">
       <h1 class="h3 mb-3 font-weight-normal" style="color: #fff">Connectez-vous</h1>
       <div class="btn-group-vertical btn-group-lg">
-        <button type="button" class="btn btn-outline-success">Admin</button>
-        <button type="button" class="btn btn-outline-success">Élève</button>
+
+        <a type="button" class="btn btn-outline-success" href="{{url_for("tableaux",name="Admin")}}">Admin</a>
+
+        <a type="button" class="btn btn-outline-success" href="{{url_for("tableaux",name="1")}}">Élève</a>
       </div>
     </form>
   </body>

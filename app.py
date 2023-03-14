@@ -1,7 +1,7 @@
 from sqlite3 import Time
 
 import flask
-from flask import render_template
+from flask import render_template, redirect
 from sqlalchemy import create_engine
 import sys
 
@@ -60,8 +60,9 @@ with app.test_request_context(): # (2) bloc execute a l'initialisation de Flask
     init_database()
     populate_database()
 
-@app.route("/client/show/<int:id>",methods=["GET", "POST"])
-def showClientInfo(id):
+@app.route("/<string:name>/show/<int:id>/",methods=["GET", "POST"])
+def showClientInfo(name,id):
+    CanModify = str(id) == name
     ClassProm = getClassProm(id)
     current_year = datetime.now().year
     Student = getStudentById(id)
@@ -69,27 +70,29 @@ def showClientInfo(id):
     Taf = getTadOfStudentByStudentId(id)
     """a faire : accordion"""
     return render_template('afficherProfileUtilisateur.html', Student=Student,Profil=Profil,Taf=Taf ,Id=id,
-                           classProm=ClassProm, currentYear=current_year)
+                           classProm=ClassProm, currentYear=current_year,canModify=CanModify,name=name)
 
 
-@app.route("/client/edit/<int:id>",methods=["GET", "POST"])
-def changeClientInfo(id):
+@app.route("/<string:name>/edit/<int:id>",methods=["GET", "POST"])
+def changeClientInfo(name,id):
     """a faire : valeur deja entrée dans l'acordion """
     ClassProm = getClassProm(id)
     current_year = datetime.now().year
     formProfile = ProfileEtudiant(student_id=id)
+    Student = getStudentById(id)
+    Profile = getProfileByIdStudent(id)
+    Taf = getTadOfStudentByStudentId(id)
     if flask.request.method == 'GET':
-        Student = getStudentById(id)
-        Profile = getProfileByIdStudent(id)
+
         formProfile = ProfileEtudiant(student_id=id,name=Student.name,surname=Student.surname,email=Profile.email,
-                                      etat_civil=Profile.etat_civil,post=Profile.post)
+                                      etat_civil=Profile.etat_civil,post=Profile.post,)
         formProfile.taf1.choices = getTafCode()
         formProfile.taf2.choices = getTafCode()
         formProfile.taf3.choices = getTafCode()
         formProfile.taf4.choices = getTafCode()
         formProfile.year.data = ClassProm.year
         return render_template('ChangePersonnaleData.jinja2',formProfile=formProfile, Id=id,
-                               classProm = ClassProm,currentYear=current_year)
+                               classProm = ClassProm,currentYear=current_year,Namecompte=name)
     else:
 
         formProfile.year.data = ClassProm.year
@@ -102,15 +105,16 @@ def changeClientInfo(id):
         if formProfile.validate_on_submit():
             print(formProfile.taf1.data, file=sys.stderr)
             ChangeProfile(formProfile)
-            return flask.redirect("/")
+            retu = "/"+name+"/"+"show"+"/"+str(id)+"/"
+            return redirect(retu)
+
         return render_template('ChangePersonnaleData.jinja2',methods="GET", formProfile=formProfile, Id=id,
-                               classProm = ClassProm,currentYear=current_year)
+                               classProm = ClassProm,currentYear=current_year,Namecompte=name)
 @app.route("/s",methods=["GET", "POST"])
 def add_record():
     formStudent = StudentForm()
     formTaf = TafForm()
     formTafStudent = TafStudentForm()
-
 
     if formTafStudent.validate_on_submit():
         addTafStudent(formTafStudent)
@@ -127,15 +131,17 @@ def tafstudentid(idStudent):
     return  render_template('index.jinja2', )
 
 
-@app.route("/",methods=["GET", "POST"])
-def clean():
+@app.route("/<string:name>",methods=["GET", "POST"])
+def tableaux(name):
     TafofStudent = getAllTafOfStudent()
     Student = student.query.all()
     Taf = taf.query.all()
     TafStudent = taf_student.query.all()
-    return render_template('index.jinja2',TafofStudent=TafofStudent, Students=Student,Taf=Taf,TafStudent=TafStudent)
 
-@app.route("/connection",methods=["GET", "POST"])
+    return render_template('index.jinja2',TafofStudent=TafofStudent, Students=Student,Taf=Taf,TafStudent=TafStudent,
+                           name=name,id=int(name))
+
+@app.route("/",methods=["GET", "POST"])
 def connection():
     return render_template('connection.jinja2')
 

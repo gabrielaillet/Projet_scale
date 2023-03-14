@@ -13,11 +13,21 @@
 <body>
 <ul class="container">
     <div class="row">
-        <div class="col-12">
+        <div class="col-6 col-md-3">
             <p class="text-center">
         <strong>Promotion {{ classProm.year }}-{{classProm.year+1}}</strong>
- </p>
+             </p>
+
+
         </div>
+        {% if name=="Admin" or canModify %}
+         <div class="col-6 col-md-3">
+
+            <form class="justify-content-end" action={{url_for("changeClientInfo",name=name,id=Id)}}>
+                <input class="btn btn-outline-success " type="submit"  value = "Modify">
+            </form>
+            </div>
+        {%  endif %}
     </div>
     <div class="row">
         <div class="col-12 col-md-6">
@@ -31,19 +41,19 @@
         {{ Student.name}}
         </li>
         <li>
-        <label>prénom</label>
+        <label>prénom :</label>
         {{ Student.surname}}
         </li>
         <li>
-        <label for="year">email </label>
+        <label for="year">email :</label>
         {{ Profil.email}}
         </li>
         <li>
-        <label for="year">état_civil </label>
+        <label for="year">état_civil :</label>
         {{ Profil.etat_civil}}
         </li>
         <li>
-        <label for="year">poste</label>
+        <label for="year">poste :</label>
         {{ Profil.post}}
         </li>
     </ul>
