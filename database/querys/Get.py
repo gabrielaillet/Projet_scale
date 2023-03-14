@@ -1,8 +1,8 @@
 import sys
-
+from flask import Flask
 from database.database import db
 from database.models import *
-
+from flask import current_app
 
 def getStudentById(idStudent):
     Student = student.query.filter_by(student_id=idStudent).first()
@@ -26,14 +26,15 @@ def getAllTafOfStudent():
         TafOfStudent += [[Student[i].student_id,getTadOfStudentByStudentId(Student[i].student_id)]]
     return TafOfStudent
 def getTafStudent(idStudent,idTaf,year):
+    print(idStudent,idTaf,year,file=sys.stderr)
     TafStudent = taf_student.query.filter_by(student_id=idStudent,taf_id=idTaf,year=year).first()
     return TafStudent
 
-def getClassProm(idStudent,year):
-    ClassProm = class_prom.query.filter_by(student_id=idStudent,year=year).first()
+def getClassProm(idStudent):
+    ClassProm = class_prom.query.filter_by(student_id=idStudent).first()
     return ClassProm
 def getClassPromByYear(year):
-    ClassProm = class_prom.query.filter_by(year=year)
+    ClassProm = class_prom.query.filter_by(year=year).all()
     return ClassProm
 def getEntrepriseById(entreprise_id):
     Entreprise = entreprise.query.filter_by(entreprise_id = entreprise_id).first()
@@ -72,3 +73,14 @@ def getStudentByTafYear(code_taf,yearStart,yearEnd):
 def getProfileByIdStudent(IdStudent):
     Profile = profile.query.filter_by(student_id = IdStudent).first()
     return Profile
+
+def getTafCode():
+    taflist = []
+    Taf = taf.query.all()
+    for i in range(len(Taf)):
+        taflist += [(Taf[i].code,Taf[i].code)]
+    return taflist+[("pas de taf","pas de taf")]
+
+def getIdTafByCode(code):
+    Taf = taf.query.filter_by(code=code).first()
+    return Taf

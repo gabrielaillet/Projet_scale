@@ -67,15 +67,11 @@
 
                         {% for studentTaf in TafStudent%}
                             {%if studentTaf.student_id == student.student_id %}
-                             <div>{{ studentTaf.year }}</div>
+                             <div>{{ studentTaf.year}}-{{studentTaf.year+1}}</div>
                             {% endif %}
-
-
                         {% endfor %}
                     </td>
                     </tr>
-
-
                     {% endfor %}
                 </tbody>
             </table>

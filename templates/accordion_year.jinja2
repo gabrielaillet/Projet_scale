@@ -1,0 +1,34 @@
+{% macro render_accordion(formProfile,year,yearref) %}
+    <div class="accordion" id="accordionExample">
+    {{ renderYear(formProfile.taf1,year,yearref) }}
+    {{ renderYear(formProfile.taf2,year+1,yearref) }}
+    {{ renderYear(formProfile.taf3,year+2,yearref) }}
+    {{ renderYear(formProfile.taf4,year+3,yearref) }}
+    </div>
+{% endmacro %}
+
+{% macro renderYear(tafField,year,yearref) %}
+
+  <div class="accordion-item">
+    <h2 class="accordion-header" id="heading{{year}}">
+        {% if year >= yearref %}
+      <button style="color: darkgray;
+                    background-color:lightgrey"
+              class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{year}}" aria-expanded="false" aria-controls="collapse{{year}}" disabled>
+        <p class="text-center"> Année {{year}}-{{year+1}} </p>
+      </button >
+        {% else %}<button class="accordion-button collapsed text-center" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{year}}" aria-expanded="false" aria-controls="collapse{{year}}" >
+         Année {{year}}-{{year+1}}
+      </button>
+        {% endif %}
+    </h2>
+    <div id="collapse{{year}}" class="accordion-collapse collapse" aria-labelledby="heading{{year}}" data-bs-parent="#accordionExample">
+      <div class="accordion-body">
+        <strong>{{ tafField }}</strong>
+      </div>
+    </div>
+  </div>
+
+{% endmacro %}
+
+
