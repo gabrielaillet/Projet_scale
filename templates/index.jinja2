@@ -39,11 +39,11 @@
                 </div>
 
                 {% if name != "Admin" %}
-                <form class="collapse navbar-collapse justify-content-end" id="navbarNavAltMarkup2" action={{url_for("showClientInfo",name=name,id=id)}}>
+                <form class="collapse navbar-collapse justify-content-end text-center" id="navbarNav" action={{url_for("showClientInfo",name=name,id=id)}}>
                     <input class="btn btn-outline-success " type="submit" value = "Profile">
                 </form>
                 {% else %}
-                <form class="collapse navbar-collapse justify-content-end" id="navbarNavAltMarkup2" action={{url_for("connection")}}>
+                <form class="collapse navbar-collapse justify-content-end text-center" id="navbarNav" action={{url_for("connection")}}>
                     <input class="btn btn-outline-success " type="submit" value = "Admin features">
                 </form>
                 {% endif %}
