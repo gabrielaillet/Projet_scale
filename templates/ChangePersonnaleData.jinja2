@@ -12,7 +12,7 @@
 </head>
 <body>
 <ul class="container">
-    <form action="{{url_for("changeClientInfo", id=Id)}}" method="post">
+    <form action="{{url_for("changeClientInfo",name=Namecompte, id=Id)}}" method="post">
     <div class="row"><div class="col-12"><p class="text-center">
         <strong>Promotion {{ classProm.year }}-{{classProm.year+1}}</strong></p></div></div>
     <div class="row">
@@ -50,9 +50,6 @@
         <div class="col-12 col-md-6"> <div class="card"> <form>
         {{ay.render_accordion(formProfile,classProm.year,currentYear)}}
       </form></div>
-    <div class="row"> <div class="col-12"><form action={{url_for("clean")}}>
-            <input class="justify-content-center" type="submit" value="watch db" /></form></div></div>
-
 </div></div>
 </form>
 </ul>

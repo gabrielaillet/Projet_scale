@@ -37,9 +37,16 @@
                       <a class="nav-item nav-link text-center" href="#">TAF</a>
                     </div>
                 </div>
-                <form class="collapse navbar-collapse justify-content-end text-center" id="navbarNav" action={{url_for("connection")}}>
-                    <input class="btn btn-outline-success" type="submit" value = "Profil">
+
+                {% if name != "Admin" %}
+                <form class="collapse navbar-collapse justify-content-end" id="navbarNavAltMarkup2" action={{url_for("showClientInfo",name=name,id=id)}}>
+                    <input class="btn btn-outline-success " type="submit" value = "Profile">
                 </form>
+                {% else %}
+                <form class="collapse navbar-collapse justify-content-end" id="navbarNavAltMarkup2" action={{url_for("connection")}}>
+                    <input class="btn btn-outline-success " type="submit" value = "Admin features">
+                </form>
+                {% endif %}
             </nav>
         </header>
         <br>
