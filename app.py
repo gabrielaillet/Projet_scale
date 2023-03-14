@@ -95,7 +95,15 @@ def clean():
     Student = student.query.all()
     Taf = taf.query.all()
     TafStudent = taf_student.query.all()
-    return render_template('index.jinja2',TafofStudent=TafofStudent, Students=Student,Taf=Taf,TafStudent=TafStudent)
+    NbreStudent = len(student.query.all())
+    NbreEntreprise = len(entreprise.query.all())
+    return render_template('index.jinja2',
+                           TafofStudent=TafofStudent,
+                           Students=Student,
+                           Taf=Taf,
+                           TafStudent=TafStudent,
+                           NbreStudent=NbreStudent,
+                           NbreEntreprise=NbreEntreprise)
 
 @app.route("/connection",methods=["GET", "POST"])
 def connection():
