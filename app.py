@@ -26,6 +26,8 @@ def populate_database():
     Stage2 = stage(student_id=2, entreprise_id=1, description="lorem ipsum2")
     Taf = taf(name="developpement logiciel",code="DCL")
     Taf2 = taf(name="developpement2", code="DCL2")
+    Taf3 = taf(name="DEMIN*",code="DEMIN*")
+    Taf4 = taf(name="DEMIN", code="DEMIN")
     studentTaf = taf_student(student_id=1,taf_id=1,year=2022)
     studentTaf2 = taf_student(student_id=2, taf_id=2, year=2024)
     Profile = profile(student_id = 1, email = "test@gmail",etat_civil = "Mr",post = "eleve")
@@ -37,6 +39,8 @@ def populate_database():
     db.session.add(Student2)
     db.session.add(Taf)
     db.session.add(Taf2)
+    db.session.add(Taf3)
+    db.session.add(Taf4)
     db.session.add(Stage)
     db.session.add(Stage2)
     db.session.add(Entreprise)
@@ -52,7 +56,7 @@ def populate_database():
 
 app = flask.Flask(__name__)
 app.config["SECRET_KEY"] = "secret_key1234"
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///C:\\Users\\DELL\\Downloads\\ue_web_example-tp_relations_flask\\database\\database.db"
+app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///C:\\Users\\Yves\\Desktop\\WEB\\Projet_scale-master\\database\\database.db"
 
 db.init_app(app) # (1) flask prend en compte la base de donnee
 with app.test_request_context(): # (2) bloc execute a l'initialisation de Flask
@@ -135,21 +139,29 @@ def tableaux(name):
     TafofStudent = getAllTafOfStudent()
     Student = student.query.all()
     Taf = taf.query.all()
+    TafsTrio =[]
+    lastTrio = []
+    entiertrio = len(Taf)%3
+    for i in range(0,int((len(Taf)-entiertrio)/3),3):
+        TafsTrio += [[Taf[i].code,Taf[i+1].code,Taf[i+2].code]]
+    for j in range((len(Taf)-entiertrio),len(Taf)):
+        lastTrio += [Taf[j].code]
+    TafsTrio += [lastTrio]
     TafStudent = taf_student.query.all()
 
     NbreStudent = len(student.query.all())
     NbreEntreprise = len(entreprise.query.all())
-
+    print(TafsTrio,file=sys.stderr)
     if(name == "Admin"):
         return render_template('index.jinja2', TafofStudent=TafofStudent, Students=Student, Taf=Taf,
                                TafStudent=TafStudent,
                                name=name, id=0, NbreStudent=NbreStudent,
-                               NbreEntreprise=NbreEntreprise)
+                               NbreEntreprise=NbreEntreprise,TafsTrio=TafsTrio)
 
 
     return render_template('index.jinja2',TafofStudent=TafofStudent, Students=Student,Taf=Taf,TafStudent=TafStudent,
                            name=name,id=int(name),NbreStudent=NbreStudent,
-                           NbreEntreprise=NbreEntreprise)
+                           NbreEntreprise=NbreEntreprise,TafsTrio=TafsTrio)
 
 @app.route("/",methods=["GET", "POST"])
 def connection():
