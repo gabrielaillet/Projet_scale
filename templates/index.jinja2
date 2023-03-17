@@ -14,15 +14,13 @@
     <!-- CSS de Bootstrap -->
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
-{% import 'navBar.jinja2' as nav %}
-  </head>
-</html>
+    {% import 'navBar.jinja2' as nav %}
 
-<html>
-    <head>
-        <title>Annuaire Alumni</title>
+    <title>Annuaire Alumni</title>
+
+
     </head>
-    <body>
+    <body  style="background-color:#dee7e6;">
         <header>
             {{ nav.renderNavBar(name,id) }}
         </header>
@@ -51,7 +49,7 @@
                     {% endfor %}
                     </div>
                     <div class="col-md-9 col-12">
-                    <table class="table table-dark bg-dark">
+                    <table class="table table-bordered border-dark">
                         <thead>
                             <tr>
                                 <th>Nom</th>
@@ -63,8 +61,8 @@
                         <tbody id="search-table">
                             {% for student in Students %}
                             <tr>
-                                <td>{{ student.name }}</td>
                                 <td>{{ student.surname }}</td>
+                                <td>{{ student.name }}</td>
                                 <td>
                                     {% for tafofstudent in TafofStudent %}
                                         {%if tafofstudent[0] == student.student_id%}
@@ -102,6 +100,7 @@
       });
     });
   });
+
 </script>
 </html>
 
