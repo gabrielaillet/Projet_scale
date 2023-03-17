@@ -16,11 +16,12 @@
             {{ nav.renderNavBar(name,id) }}
         </header>
 <ul class="container">
-    <form action="{{url_for("changeClientInfo",name=Namecompte, id=Id)}}" method="post">
+    <form action="{{url_for("changeClientInfo",name=Namecompte, id=id)}}" method="post">
     <div class="row"><div class="col-12"><p class="text-center">
         <strong>Promotion {{ classProm.year }}-{{classProm.year+1}}</strong></p></div></div>
     <div class="row">
-        <div class="col-12 col-md-6"><div class="card">
+        <div class="col-12 col-md-6">
+            <div class="card">
     <div class="card-body">
 
     <label>Add Taff Students </label>

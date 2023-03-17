@@ -15,9 +15,10 @@ class profile(db.Model):
 
 
 class taf(db.Model):
-    taf_id = db.Column(db.Integer, primary_key=True)
+    taf_id = db.Column('id',db.Integer, primary_key=True)
     name = db.Column(db.Text)
     code = db.Column(db.Text)
+    description = db.Column(db.Text)
 
 
 class taf_student(db.Model):
@@ -28,7 +29,7 @@ class taf_student(db.Model):
 
 class class_prom(db.Model):
     student_id = db.Column(db.Integer, db.ForeignKey('student.id'), primary_key=True)
-    year = db.Column(db.Integer, primary_key=True)
+    year = db.Column(db.Integer)
 
 
 class entreprise(db.Model):

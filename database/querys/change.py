@@ -37,3 +37,20 @@ def ChangeProfile(form):
         addTafStudent(StudentTaf4)
 
     db.session.commit()
+
+
+def changeClassProm(form):
+
+    studentInfo = form.student.data.split()
+    student_id = student.query.filter_by(name=studentInfo[0],surname=studentInfo[1]).first().student_id
+    classProm = getClassProm(student_id)
+    db.session.delete(classProm)
+    ClassProm = class_prom(student_id = student_id,year = form.year.data)
+    save_object_to_db(ClassProm)
+    return ClassProm
+
+def changeTaf(form,Taf):
+    Taf = taf(name=form.data.name,code=form.data.code,description=form.data.description)
+    delTaf(Taf.taf_id)
+    save_object_to_db(Taf)
+    return Taf
