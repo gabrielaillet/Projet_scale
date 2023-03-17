@@ -1,0 +1,29 @@
+<html>
+<head>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD"
+      crossorigin="anonymous">
+  <meta charset="utf-8"/>
+  <title>Marked in the browser</title>
+</head>
+<body>
+
+<div class="card">
+  <div class="text-center"><strong>{{Taf.name}}-{{Taf.code}}</strong></div>
+    <div class="card-body">
+      <div id="content">
+    </div>
+  </div>
+</div>
+  <script id="myScript" data-text="{{Taf.description}}">
+      var myScript = document.getElementById("myScript");
+      console.log(myScript);
+      var text = myScript.dataset.text;
+    document.getElementById('content').innerHTML =
+      marked.parse(text);
+  </script>
+
+</body>
+</html>

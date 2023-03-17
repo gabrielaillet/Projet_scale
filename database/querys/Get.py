@@ -7,6 +7,13 @@ from flask import current_app
 def getStudentById(idStudent):
     Student = student.query.filter_by(student_id=idStudent).first()
     return Student
+
+def getStudentNameSurnameForForm():
+    Students = student.query.all()
+    studentlist = []
+    for studen in Students:
+        studentlist += [(studen.name  + " " + studen.surname,studen.name  + " " + studen.surname)]
+    return studentlist
 def getTafById(idTaf):
     Taf = taf.query.filter_by(taf_id=idTaf).first()
     return Taf
@@ -19,6 +26,13 @@ def getTadOfStudentByStudentId(idStudent):
     tafs = taf.query.filter(taf.taf_id.in_(Tafids)).all()
 
     return tafs
+
+def getPromotionYear():
+    PromYear = set()
+    romyear = class_prom.query.all()
+    for i in range(len(romyear)):
+        PromYear.add(romyear[i].year)
+    return list(PromYear)
 def getAllTafOfStudent():
     Student = student.query.all()
     TafOfStudent = []
@@ -84,3 +98,11 @@ def getTafCode():
 def getIdTafByCode(code):
     Taf = taf.query.filter_by(code=code).first()
     return Taf
+
+def isStudentInClassProm(form):
+    studentInfo = form.student.data.split()
+    student_id = student.query.filter_by(name=studentInfo[0], surname=studentInfo[1]).first().student_id
+    classprom = class_prom.query.filter_by(student_id=student_id).first()
+    if(classprom == None):
+        return False
+    return True

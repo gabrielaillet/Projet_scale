@@ -11,11 +11,11 @@ class StudentForm(FlaskForm):
     # id used only by update/edit
     id_field = HiddenField()
     name = StringField('prenom de eleve', [ InputRequired(),
-        Regexp(r'^[A-Za-z\s\-\']+$', message="Invalid sock name"),
+
         Length(min=0, max=25, message="Invalid sock name length")
         ])
     surname = StringField('nom de famille de eleve', [ InputRequired(),
-        Regexp(r'^[A-Za-z\s\-\']+$', message="Invalid sock name"),
+
         Length(min=0, max=25, message="Invalid sock name length")
         ])
     # updated - date - handled in the route function
@@ -27,17 +27,27 @@ class TafForm(FlaskForm):
     # id used only by update/edit
     id_field = HiddenField()
     name = StringField('nom de la taf', [ InputRequired(),
-        Regexp(r'^[A-Za-z\s\-\']+$', message="Invalid sock name"),
         Length(min=0, max=25, message="Invalid sock name length")
         ])
     code = StringField('code de la taf', [ InputRequired(),
-        Regexp(r'^[A-Z\s\*\']+$', message="Invalid sock name"),
         Length(min=0, max=7, message="Invalid sock name length")
         ])
     # updated - date - handled in the route function
     updated = HiddenField()
     submit=SubmitField('Add/Update Record')
 
+class TafFormWithDescription(FlaskForm):
+    # id used only by update/edit
+    id_field = HiddenField()
+    name = StringField('nom de la taf', [ InputRequired(),
+        Length(min=0, max=25, message="Invalid sock name length")
+        ])
+    code = StringField('code de la taf', [ InputRequired(),
+        Length(min=0, max=7, message="Invalid sock name length")
+        ])
+    description = StringField('desciption')
+    updated = HiddenField()
+    submit=SubmitField('Add/Update Record')
 
 class TafStudentForm(FlaskForm):
 
@@ -57,8 +67,12 @@ class TafStudentForm(FlaskForm):
     submit = SubmitField('Add/Update Record')
 
 class classPromForm(FlaskForm):
-    student_id = IntegerField('id student', validators=[InputRequired()])
-    year = StringField('code')
+    current_year = 2015
+    year_range = range(current_year, current_year + 30)
+    year_choices = [(str(year), str(year)) for year in year_range]
+    year = SelectField('Choose a year', choices=year_choices)
+    student = SelectField('id student')
+
 
 
 class EntrepriseForm(FlaskForm):
@@ -71,13 +85,13 @@ class StageForm(FlaskForm):
     entreprise_id = IntegerField('id student',validators=[InputRequired()])
     description = StringField('code')
 
-class ProfileEtudiant(FlaskForm):
+class ProfileEtudiantForm(FlaskForm):
     student_id = IntegerField()
     name = StringField('code')
     surname = StringField('code')
     email = StringField('code')
     etat_civil = RadioField('code',choices=[('Mr', 'Mr'), ('Mme', 'Mme'), ('Autre', 'Autre')])
-    post = RadioField('code',choices=[('eleve', 'eleve'), ('enseignant', 'enseignant'), ('salarier', 'salarier'), ("chef d'entreprise", "chef d'entreprise")])
+    post = RadioField('code',choices=[('étudiant', 'étudiant'), ('enseignant', 'enseignant'), ('salarier', 'salarier'), ("chef d'entreprise", "chef d'entreprise")])
 
     taf1 = RadioField('code',choices=[],default="pas de taf",validators=[InputRequired(message="Please enter taf1")])
     year = IntegerField('Year')
@@ -90,3 +104,13 @@ class ProfileEtudiant(FlaskForm):
 
     taf4 = RadioField('code', choices=[],default="pas de taf",validators=[InputRequired(message="Please enter taf4")])
 
+class AddNewStudentForm(FlaskForm):
+    name = StringField('code')
+    surname = StringField('code')
+    email = StringField('code',default="")
+    etat_civil = RadioField('code', choices=[('Mr', 'Mr'), ('Mme', 'Mme'), ('Autre', 'Autre')])
+    taf1 = RadioField('code',choices=[('Master', 'Master'), ('Fil', 'Fil'), ('Fit', 'Fit'),('Fis','Fis')],default="Fis",validators=[InputRequired(message="Please enter taf1")])
+    current_year = 2015
+    year_range = range(current_year, current_year + 30)
+    year_choices = [(str(year), str(year)) for year in year_range]
+    year = SelectField('Choose a year', choices=year_choices)
