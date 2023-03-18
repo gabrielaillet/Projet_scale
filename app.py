@@ -4,8 +4,7 @@ import flask
 from flask import render_template, redirect, url_for
 from sqlalchemy import create_engine
 import sys
-
-
+from jinja2 import Environment
 
 import database.database as db
 from Forms.Forms import *
@@ -22,6 +21,15 @@ loremipsum = "# Linguae habeat deus quaeratur ignes tempora regni\n " \
              " aliquisque miseru solet Erymanthidas cupit relinquit satyros" \
              " homo qua et edidit. Felicisque regnumHippothousque, futuri " \
              "pia amore mea: ebur pugnae surrexit posuere frequentesprimo? Nostra est numina! \n"
+
+
+
+
+def length_filter(value):
+    return len(value)
+
+env = Environment()
+env.filters['length'] = length_filter
 def populate_database():
     db.drop_all()
     db.create_all()
@@ -64,7 +72,7 @@ def populate_database():
 
 app = flask.Flask(__name__)
 app.config["SECRET_KEY"] = "secret_key1234"
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///C:\\Users\\Yves\\Desktop\\WEB\\Projet_scale-master\\database\\database.db"
+app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///C:\\Users\\DELL\\Downloads\\ue_web_example-tp_relations_flask\\database\\database.db"
 db.init_app(app) # (1) flask prend en compte la base de donnee
 with app.test_request_context(): # (2) bloc execute a l'initialisation de Flask
     init_database()
@@ -85,9 +93,11 @@ def showClientInfo(name,id):
         ClassProm = dict()
         ClassProm['year'] = 0
     current_year = datetime.now().year
+    print(ClassProm.year)
     Student = getStudentById(id)
     Profil = getProfileByIdStudent(id)
     Taf = getTadOfStudentByStudentId(id)
+
 
     return render_template('afficherProfileUtilisateur.html', Student=Student,Profil=Profil,Taf=Taf ,id=id,
                            classProm=ClassProm, currentYear=current_year,canModify=CanModify,name=name)

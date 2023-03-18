@@ -85,6 +85,7 @@ def getStudentByTafYear(code_taf,yearStart,yearEnd):
     return Student
 
 def getProfileByIdStudent(IdStudent):
+    print(IdStudent)
     Profile = profile.query.filter_by(student_id = IdStudent).first()
     return Profile
 

@@ -36,6 +36,13 @@ def ChangeProfile(form):
                                      year=str(form.year.data+3))
         addTafStudent(StudentTaf4)
 
+    Profile = getProfileByIdStudent(form.student_id.data)
+    db.session.delete(Profile)
+
+    Profile.post = form.post.data
+    Profile.email = form.email.data
+    Profile.etat_civil = form.etat_civil.data
+    db.session.add(Profile)
     db.session.commit()
 
 
