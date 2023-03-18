@@ -15,16 +15,16 @@
       <button style="color: darkgray;
                     background-color:lightgrey"
               class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{year}}" aria-expanded="false" aria-controls="collapse{{year}}" disabled>
-        <p class="text-center"> Année {{year}}-{{year+1}} </p>
+        <p class="text-center"><strong> Année {{year}}-{{year+1}} </strong></p>
       </button >
         {% else %}<button class="accordion-button collapsed text-center" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{year}}" aria-expanded="false" aria-controls="collapse{{year}}" >
-         Année {{year}}-{{year+1}}
+         <strong>Année {{year}}-{{year+1}}</strong>
       </button>
         {% endif %}
     </h2>
     <div id="collapse{{year}}" class="accordion-collapse collapse" aria-labelledby="heading{{year}}" data-bs-parent="#accordionExample">
       <div class="accordion-body">
-        <strong>{{ tafField }}</strong>
+        {{ tafField }}
       </div>
     </div>
   </div>
@@ -38,7 +38,7 @@
     <h2 class="accordion-header" id="heading{{year}}">
       <button
               class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{year}}" aria-expanded="false" aria-controls="collapse{{year}}">
-        <p class="text-center"> Promotion {{year}}-{{year+1}} </p>
+        <p class="text-center"> <strong>Promotion {{year}}-{{year+1}} </strong> </p>
       </button >
     </h2>
 
@@ -46,7 +46,7 @@
       <div class="accordion-body">
           {% for student in promNom %}
               <div>
-        <strong>{{ student.name }} {{ student.surname }}</strong>
+        {{ student.name }} {{ student.surname }}
               </div>
           {% endfor %}
       </div>

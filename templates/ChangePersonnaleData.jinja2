@@ -11,28 +11,36 @@
     {% import 'accordion_year.jinja2' as ay %}
     {% import 'navBar.jinja2' as nav %}
 </head>
-<body>
+<body style="background-color:#dee7e6;">
 <header>
             {{ nav.renderNavBar(name,id) }}
 </header>
 <ul class="container">
     <form action="{{url_for("changeClientInfo",name=name, id=id)}}" method="post">
-    <div class="row"><div class="col-12"><p class="text-center">
-        <strong>Promotion {{ classProm.year }}-{{classProm.year+1}}</strong></p></div></div>
     <div class="row">
-        <div class="col-12 col-md-6">
+        <div class="col-12">
+            <br>
+            <h1 class="text-center">{{ Student.name }} {{ Student.surname }}</h1>
+            <p class="text-center">
+        <strong>Promotion {{ classProm.year }}-{{classProm.year+1}}</strong>
+             </p>
+        </div>
+    </div>
+        <div class="row">
+        <div class="col-6 col-md-6">
             <div class="card">
     <div class="card-body">
 
-    <label>Add Taff Students </label>
+    <label><strong>Informations personnelles</strong> </label>
     {{ formProfile.hidden_tag()}}
     <ul>
+        <br>
         <li>
     <label>nom </label>
         {{ formProfile.name}}
         </li>
         <li>
-        <label>prenom </label>
+        <label>prénom </label>
         {{ formProfile.surname}}
         </li>
         <li>
@@ -40,22 +48,30 @@
         {{ formProfile.email}}
         </li>
         <li>
-        <label for="year">etat_civil </label>
+        <label for="year">état-civil </label>
         {{ formProfile.etat_civil}}
         </li>
         <li>
         <label for="year">poste </label>
         {{ formProfile.post}}
         </li>
-        <input type="submit">
     </ul>
 
 </div>
 </div></div>
-        <div class="col-12 col-md-6"> <div class="card"> <form>
+        <div class="col-6 col-md-6"> <div class="card"> <form>
         {{ay.render_accordion(formProfile,classProm.year,currentYear)}}
-      </form></div>
-</div></div>
+            </form>
+        </div>
+    </div>
+        <div class="container fixed-bottom mb-3">
+            <div class="row justify-content-center">
+                <div class="col-1">
+                    <input class="btn btn-outline-success" type="submit" value="Modifier">
+                </div>
+            </div>
+            </div>
+        </div>
 </form>
 </ul>
 </body>

@@ -64,7 +64,7 @@ def populate_database():
 
 app = flask.Flask(__name__)
 app.config["SECRET_KEY"] = "secret_key1234"
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///C:\\Users\\DELL\\Downloads\\ue_web_example-tp_relations_flask\\database\\database.db"
+app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///C:\\Users\\Yves\\Desktop\\WEB\\Projet_scale-master\\database\\database.db"
 db.init_app(app) # (1) flask prend en compte la base de donnee
 with app.test_request_context(): # (2) bloc execute a l'initialisation de Flask
     init_database()
@@ -163,7 +163,7 @@ def changeClientInfo(name,id):
     Taf = getTadOfStudentByStudentId(id)
     if flask.request.method == 'GET':
         formProfile = ProfileEtudiantForm(student_id=id, name=Student.name, surname=Student.surname, email=Profile.email,
-                                          etat_civil=Profile.etat_civil, post=Profile.post)
+                                          etat_civil=Profile.etat_civil, post=Profile.post, Student=Student)
         tafCode = getTafCode()
         if(len(Taf) >= 1):
 
@@ -183,7 +183,7 @@ def changeClientInfo(name,id):
         formProfile.taf4.choices = tafCode
         formProfile.year.data = ClassProm.year
         return render_template('ChangePersonnaleData.jinja2',formProfile=formProfile, id=id,
-                               classProm = ClassProm,currentYear=current_year,name=name)
+                               classProm = ClassProm,currentYear=current_year,name=name,Student=Student)
     else:
 
         formProfile.year.data = ClassProm.year
@@ -199,7 +199,7 @@ def changeClientInfo(name,id):
             return redirect(url_for('showClientInfo', name=name,id=id))
 
         return render_template('ChangePersonnaleData.jinja2',methods="GET", formProfile=formProfile, id=id,
-                               classProm = ClassProm,currentYear=current_year,Namecompte=name)
+                               classProm = ClassProm,currentYear=current_year,Namecompte=name,Student=Student)
 @app.route("/s/3",methods=["GET", "POST"])
 def add_record():
     formStudent = StudentForm()
