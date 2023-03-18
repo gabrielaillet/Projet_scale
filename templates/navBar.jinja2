@@ -8,7 +8,7 @@
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <div class="navbar-nav">
                       <a class="nav-item nav-link text-center" href="{{url_for("tableaux",name=name)}}">Tableau de bord</a>
-                      <a class="nav-item nav-link text-center" href="#">Promotion</a>
+                      <a class="nav-item nav-link text-center" href="{{url_for("prom",name=name)}}">Promotion</a>
                       <a class="nav-item nav-link text-center" href="#">Entreprises</a>
                     </div>
                 </div>
@@ -18,7 +18,7 @@
                     <input class="btn btn-outline-success " type="submit" value = "Profile">
                 </form>
                 {% else %}
-                <form class="collapse navbar-collapse justify-content-end text-center" id="navbarNav" action={{url_for("connection")}}>
+                <form class="collapse navbar-collapse justify-content-end text-center" id="navbarNav" action={{url_for("adminTab",name=name)}}>
                     <input class="btn btn-outline-success " type="submit" value = "Admin features">
                 </form>
                 {% endif %}

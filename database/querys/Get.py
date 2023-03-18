@@ -106,3 +106,24 @@ def isStudentInClassProm(form):
     if(classprom == None):
         return False
     return True
+
+def getPromStudents():
+    classprm = class_prom.query.all()
+
+    setYear = set()
+    for elemt in classprm:
+        setYear.add(elemt.year)
+    classPromList = []
+    listnul = []
+    for elemt in setYear:
+        classPromList +=  [getClassPromByYear(elemt)]
+    for classprm in classPromList:
+        l = []
+        for e in classprm:
+            print(e.student_id)
+            l += [e.student_id]
+        listnul += [l]
+    classPromList = []
+    for l in listnul:
+        classPromList += [[setYear.pop(),student.query.filter(student.student_id.in_(l)).all()]]
+    return classPromList

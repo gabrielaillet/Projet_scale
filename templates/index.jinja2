@@ -14,6 +14,7 @@
     <!-- CSS de Bootstrap -->
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
+
     {% import 'navBar.jinja2' as nav %}
 
     <title>Annuaire Alumni</title>
@@ -21,6 +22,7 @@
 
     </head>
     <body  style="background-color:#dee7e6;">
+
         <header>
             {{ nav.renderNavBar(name,id) }}
         </header>
@@ -31,16 +33,17 @@
                 <div class="row">
                     <div class="container col-md-3 col-12">
                         <div class="row">
-                            <input type="text" class="form-control" placeholder="Recherchez un nom ou un prénom" aria-label="Recherchez un nom ou un prénom" aria-describedby="button-addon2" id="search-input">
+                            <input type="text" class="form-control" placeholder="Recherchez prénom" aria-label="Recherchez un nom" aria-describedby="button-addon2" id='name-input'>
+                            <input type="text" class="form-control" placeholder="Recherchez un nom " aria-label="Recherchez un prénom" aria-describedby="button" id='surname-input'>
                         </div>
                         {%  for trioTAF in TafsTrio %}
                         <div class="row">
                             {% for element in trioTAF %}
                             <div class="col">
                                 <div class="form-check">
-                                  <input class="form-check-input" type="checkbox" name="filter[]" value="{{ element }}" id="{{ element }}">
-                                  <label class="form-check-label" for="{{ element }}">
-                                    {{ element }}
+                                  <input class="form-check-input" type="checkbox" name="filter[]" value="{{ element.name }}" id="{{ element.name }}">
+                                  <label class="form-check-label" for="{{ element.name }}">
+                                    {{ element.code }}
                                   </label>
                                 </div>
                              </div>
@@ -61,16 +64,16 @@
                         <tbody id="search-table">
                             {% for student in Students %}
                             <tr>
-                                <td>{{ student.surname }}</td>
-                                <td>{{ student.name }}</td>
-                                <td>
+                                <td  class="name">{{ student.name }}</td>
+                                <td class="surname">{{ student.surname }}</td>
+                                <td >
                                     {% for tafofstudent in TafofStudent %}
                                         {%if tafofstudent[0] == student.student_id%}
                                             {% if tafofstudent[1] |length ==0 %}
                                                 <div>{{'Pas de Taf'}}</div>
                                             {% else %}
                                             {% for taf in tafofstudent[1] %}
-                                                <div>{{ taf.name }}</div>
+                                                <div class="taf">{{ taf.name }}</div>
                                             {% endfor %}
                                                 {% endif %}
                                         {% endif %}
@@ -91,16 +94,35 @@
                 </div>
             </div>
     </body>
-    <script>
-  $(document).ready(function(){
-    $('#search-input').on('keyup', function(){
-      var value = $(this).val().toLowerCase();
-      $('#search-table tr').filter(function(){
-        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-      });
-    });
+  <script>
+  // Listen for changes on search inputs
+  $('#name-input, #surname-input').on('keyup', function(){
+    filterTable(); // Call the filtering function
   });
 
-</script>
+  // Filtering function
+  function filterTable() {
+    var nameValue = $('#name-input').val().toLowerCase();
+    var surnameValue = $('#surname-input').val().toLowerCase();
+    $('#search-table tr').filter(function(){
+      var name = $(this).find('.name').text().toLowerCase();
+      var surname = $(this).find('.surname').text().toLowerCase();
+      var nameMatch = name.indexOf(nameValue) > -1;
+      var surnameMatch = surname.indexOf(surnameValue) > -1;
+      var tafMatch = true;
+      if (selected.length > 0) {
+        tafMatch = false; // Assume false until a match is found
+          console.log($(this).find('.taf'))
+        $(this).find('.taf').each(function(){
+          if (selected.indexOf($(this).text()) > -1) {
+            tafMatch = true;
+          }
+        });
+      }
+      $(this).toggle(nameMatch && surnameMatch && tafMatch);
+    });
+  }
+});
+    </script>
 </html>
 

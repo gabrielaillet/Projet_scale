@@ -2,7 +2,7 @@ from datetime import datetime
 
 from flask_wtf import FlaskForm
 from wtforms import HiddenField, StringField, SubmitField, IntegerField, BooleanField, SelectMultipleField, RadioField, \
-    FieldList
+    FieldList, TextAreaField
 from wtforms.validators import InputRequired, Regexp, Length, ValidationError
 from database.querys.Get import *
 from wtforms import SelectField
@@ -45,7 +45,7 @@ class TafFormWithDescription(FlaskForm):
     code = StringField('code de la taf', [ InputRequired(),
         Length(min=0, max=7, message="Invalid sock name length")
         ])
-    description = StringField('desciption')
+    description = TextAreaField('My String',render_kw={'style': 'resize: vertical; width:50%;height:50vh',"rows": 1})
     updated = HiddenField()
     submit=SubmitField('Add/Update Record')
 

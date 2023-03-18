@@ -8,8 +8,12 @@
       integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD"
       crossorigin="anonymous">
 
+    {% import 'navBar.jinja2' as nav %}
 </head>
 <body>
+<header>
+            {{ nav.renderNavBar(name,id) }}
+</header>
     <div class="container">
         <div class="row">
             <div class="col-12 col-md-4">
@@ -17,7 +21,7 @@
                     <div class="text-center"><strong>Taf</strong></div>
                     <div class="card-body">
                     {% for taf in Tafs %}
-                        <div>{{  taf.code}}</div>
+                        <a href="{{url_for("ShowTaf",name=name,TafCode=taf.code )}}">{{  taf.code}}</a>
                     {% endfor %}
                         <form action="{{url_for("adminTab",name=name)}}" method="post">
                             {{ formTaf.hidden_tag() }}
@@ -35,7 +39,7 @@
                     <div class="text-center"><strong>Promo</strong></div>
                     <div class="card-body">
                         <form action="{{url_for("adminTab",name=name)}}" method="post">
-
+                                    {{ formClassProm.hidden_tag() }}
                             <div>
                                 {{formClassProm.year }}
                             </div>
