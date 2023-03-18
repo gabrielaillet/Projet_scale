@@ -1,7 +1,7 @@
 from sqlite3 import Time
 
 import flask
-from flask import render_template, redirect
+from flask import render_template, redirect, url_for
 from sqlalchemy import create_engine
 import sys
 
@@ -37,9 +37,9 @@ def populate_database():
     Taf4 = taf(name="DEMIN", code="DEMIN",description=loremipsum)
     studentTaf = taf_student(student_id=1,taf_id=1,year=2022)
     studentTaf2 = taf_student(student_id=2, taf_id=2, year=2024)
-    Profile = profile(student_id = 1, email = "test@gmail",etat_civil = "Mr",post = "eleve")
-    Prom1 = class_prom(student_id=1, year=2021)
-    Prom2 = class_prom(student_id=2, year=2021)
+    Profile = profile(student_id = 1, email = "test@gmail",etat_civil = "Mr",post = "étudiant")
+    Prom1 = class_prom(student_id=1, year=2022)
+    Prom2 = class_prom(student_id=2, year=2022)
     db.session.add(Prom1)
     db.session.add(Prom2)
     db.session.add(Student)
@@ -70,10 +70,20 @@ with app.test_request_context(): # (2) bloc execute a l'initialisation de Flask
     init_database()
     populate_database()
 
+
+
+@app.route("/<string:name>/prom",methods=["GET", "POST"])
+def prom(name):
+    classProm = getPromStudents()
+    print(classProm,file=sys.stderr)
+    return render_template("PromotionTab.html",classProm=classProm,name=name,id=1)
 @app.route("/<string:name>/show/<int:id>/",methods=["GET", "POST"])
 def showClientInfo(name,id):
     CanModify = str(id) == name
     ClassProm = getClassProm(id)
+    if(ClassProm == None):
+        ClassProm = dict()
+        ClassProm['year'] = 0
     current_year = datetime.now().year
     Student = getStudentById(id)
     Profil = getProfileByIdStudent(id)
@@ -93,15 +103,16 @@ def editTaf(name,TafCode):
         Taf = getIdTafByCode(TafCode)
         if(Taf != None):
             if flask.request.method == 'GET':
-                TafForm = TafFormWithDescription(name=Taf.name,code=Taf.code,desciption=Taf.description)
-                return render_template('TafEdit.html', Taf=Taf, TafForm=TafForm)
+                TafForm = TafFormWithDescription(name=Taf.name,code=Taf.code,description=Taf.description)
+                return render_template('TafEdit.html',name=name, Taf=Taf, TafForm=TafForm)
             if flask.request.method == 'POST':
                 TafForm = TafFormWithDescription()
 
                 if(TafForm.validate_on_submit()):
+                    print(TafForm.description, file=sys.stderr)
                     changeTaf(TafForm,Taf)
-                    return render_template('TafDescription.html', Taf=Taf)
-
+                    return redirect(url_for("ShowTaf",name=name,TafCode=TafForm.code.data))
+                return render_template('TafEdit.html',name=name, Taf=Taf, TafForm=TafForm)
 @app.route("/<string:name>/edit/",methods=["GET", "POST"])
 def adminTab(name):
     if (name == "Admin"):
@@ -129,8 +140,10 @@ def adminTab(name):
 
                 if(NewStudentForm.validate_on_submit()):
                     addNewStudent(NewStudentForm)
-                    print(2,file=sys.stderr)
+
+
                 if(formClassProm.validate_on_submit()):
+
                     if(isStudentInClassProm(formClassProm)):
                         changeClassProm(formClassProm)
 
@@ -170,7 +183,7 @@ def changeClientInfo(name,id):
         formProfile.taf4.choices = tafCode
         formProfile.year.data = ClassProm.year
         return render_template('ChangePersonnaleData.jinja2',formProfile=formProfile, id=id,
-                               classProm = ClassProm,currentYear=current_year,Namecompte=name)
+                               classProm = ClassProm,currentYear=current_year,name=name)
     else:
 
         formProfile.year.data = ClassProm.year
@@ -223,9 +236,9 @@ def tableaux(name):
     lastTrio = []
     entiertrio = len(Taf)%3
     for i in range(0,int((len(Taf)-entiertrio)/3),3):
-        TafsTrio += [[Taf[i].code,Taf[i+1].code,Taf[i+2].code]]
+        TafsTrio += [[Taf[i],Taf[i+1],Taf[i+2]]]
     for j in range((len(Taf)-entiertrio),len(Taf)):
-        lastTrio += [Taf[j].code]
+        lastTrio += [Taf[j]]
     TafsTrio += [lastTrio]
     TafStudent = taf_student.query.all()
 
@@ -240,7 +253,7 @@ def tableaux(name):
 
 
     return render_template('index.jinja2',TafofStudent=TafofStudent, Students=Student,Taf=Taf,TafStudent=TafStudent,
-                           name=name,id=int(name),NbreStudent=NbreStudent,
+                           name=name,id=1,NbreStudent=NbreStudent,
                            NbreEntreprise=NbreEntreprise,TafsTrio=TafsTrio)
 
 @app.route("/",methods=["GET", "POST"])

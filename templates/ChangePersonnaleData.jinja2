@@ -14,9 +14,9 @@
 <body>
 <header>
             {{ nav.renderNavBar(name,id) }}
-        </header>
+</header>
 <ul class="container">
-    <form action="{{url_for("changeClientInfo",name=Namecompte, id=id)}}" method="post">
+    <form action="{{url_for("changeClientInfo",name=name, id=id)}}" method="post">
     <div class="row"><div class="col-12"><p class="text-center">
         <strong>Promotion {{ classProm.year }}-{{classProm.year+1}}</strong></p></div></div>
     <div class="row">

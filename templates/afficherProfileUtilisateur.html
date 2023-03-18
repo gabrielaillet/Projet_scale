@@ -67,9 +67,11 @@
         </div>
         <div class="col-12 col-md-6">
                 <div class="card">
+                <div class="accordion" id="accordionExample">
                     {% for taf in Taf %}
                     {{ay.renderYear(taf.code,classProm.year,currentYear)}}
                     {% endfor %}
+                </div>
                 </div>
             </div>
     </div>

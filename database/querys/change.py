@@ -50,7 +50,7 @@ def changeClassProm(form):
     return ClassProm
 
 def changeTaf(form,Taf):
-    Taf = taf(name=form.data.name,code=form.data.code,description=form.data.description)
     delTaf(Taf.taf_id)
+    Taf = taf(taf_id=Taf.taf_id,name=form.name.data,code=form.code.data,description=form.description.data)
     save_object_to_db(Taf)
     return Taf

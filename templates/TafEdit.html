@@ -7,10 +7,15 @@
       crossorigin="anonymous">
   <meta charset="utf-8"/>
   <title>Marked in the browser</title>
+    {% import 'navBar.jinja2' as nav %}
 </head>
 <body>
-<form>
+<header>
+            {{ nav.renderNavBar(name,id) }}
+</header>
+<form action="{{url_for("editTaf",name=name, TafCode=Taf.code)}}" method="post"}}>
 <div class="card">
+    {{ TafForm.hidden_tag() }}
   <div class="text-center"><strong>{{TafForm.name}}-{{TafForm.code}}</strong></div>
     <div class="card-body">
       <div id="content">
