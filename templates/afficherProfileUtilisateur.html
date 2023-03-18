@@ -11,27 +11,21 @@
     {% import 'accordion_year.jinja2' as ay %}
     {% import 'navBar.jinja2' as nav %}
 </head>
-<body>
+<body style="background-color:#dee7e6;">
 <header>
             {{ nav.renderNavBar(name,id) }}
 </header>
 <ul class="container">
     <div class="row">
-        <div class="col-6 col-md-3">
+        <div class="col-12">
+            <br>
+            <h1 class="text-center">{{ Student.name }} {{ Student.surname }}</h1>
             <p class="text-center">
         <strong>Promotion {{ classProm.year }}-{{classProm.year+1}}</strong>
              </p>
 
 
         </div>
-        {% if name=="Admin" or canModify %}
-         <div class="col-6 col-md-3">
-
-            <form class="justify-content-end" action={{url_for("changeClientInfo",name=name,id=id)}}>
-                <input class="btn btn-outline-success " type="submit"  value = "Modify">
-            </form>
-            </div>
-        {%  endif %}
     </div>
     <div class="row">
         <div class="col-12 col-md-6">
@@ -76,6 +70,17 @@
             </div>
     </div>
 
-</ul>
+</ul> <div class="container fixed-bottom mb-3">
+        {% if name=="Admin" or canModify %}
+         <div class="row justify-content-center">
+         <div class="col-1">
+
+            <form action={{url_for("changeClientInfo",name=name,id=id)}}>
+                <input class="btn btn-outline-success" type="submit"  value = "Modifier">
+            </form>
+            </div>
+        {%  endif %}
+    </div>
+</div>
 </body>
 </html>
