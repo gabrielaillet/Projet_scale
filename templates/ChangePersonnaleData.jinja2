@@ -10,6 +10,16 @@
             crossorigin="anonymous"></script>
     {% import 'accordion_year.jinja2' as ay %}
     {% import 'navBar.jinja2' as nav %}
+
+    <!-- style of Stringfield -->
+    <style>
+.form-control-lg {
+    font-size: 1rem;
+    line-height: 0.4rem;
+    height: 0.5rem;
+    padding: 0.2rem;
+}
+</style>
 </head>
 <body style="background-color:#dee7e6;">
 <header>
@@ -37,16 +47,19 @@
         <br>
         <li>
     <label>nom </label>
-        {{ formProfile.name}}
+        {{ formProfile.name(class="form-control-lg") }}
         </li>
+        <br>
         <li>
         <label>prénom </label>
-        {{ formProfile.surname}}
+        {{ formProfile.surname(class="form-control-lg")}}
         </li>
+        <br>
         <li>
         <label for="year">email </label>
-        {{ formProfile.email}}
+        {{ formProfile.email(class="form-control-lg")}}
         </li>
+        <br>
         <li>
         <label for="year">état-civil </label>
         {{ formProfile.etat_civil}}
@@ -64,14 +77,14 @@
             </form>
         </div>
     </div>
-        <div class="container fixed-bottom mb-3">
-            <div class="row justify-content-center">
+            <div class="container">
+              <div class="row justify-content-center">
                 <div class="col-1">
-                    <input class="btn btn-outline-success" type="submit" value="Modifier">
+                    <br>
+                  <input class="btn btn-outline-success" type="submit" value="Modifier">
                 </div>
+              </div>
             </div>
-            </div>
-        </div>
 </form>
 </ul>
 </body>
