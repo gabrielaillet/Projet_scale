@@ -64,7 +64,7 @@ def populate_database():
 
 app = flask.Flask(__name__)
 app.config["SECRET_KEY"] = "secret_key1234"
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///C:\\Users\\Yves\\Desktop\\WEB\\Projet_scale-master\\database\\database.db"
+app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///C:\\Users\\DELL\\Downloads\\ue_web_example-tp_relations_flask\\database\\database.db"
 db.init_app(app) # (1) flask prend en compte la base de donnee
 with app.test_request_context(): # (2) bloc execute a l'initialisation de Flask
     init_database()
@@ -196,8 +196,7 @@ def changeClientInfo(name,id):
         if formProfile.validate_on_submit():
             print(formProfile.taf1.data, file=sys.stderr)
             ChangeProfile(formProfile)
-            retu = "/"+name+"/"+"show"+"/"+str(id)+"/"
-            return redirect(retu)
+            return redirect(url_for('showClientInfo', name=name,id=id))
 
         return render_template('ChangePersonnaleData.jinja2',methods="GET", formProfile=formProfile, id=id,
                                classProm = ClassProm,currentYear=current_year,Namecompte=name)
