@@ -84,7 +84,7 @@
                         <tbody id="search-table" >
                             {% for student in Students %}
                             <tr>
-                                <td class="name"  ><a class="link-dark" href="{{ url_for('showClientInfo',name=name,id=student.student_id) }}"> {{ student.name }}</a></td>
+                                <td class="name"  ><a class="link-dark" href="{{ url_for('showClientInfo',name=name,id=student.student_id) }}"> {{ student.name }}</td>
                                 <td class="surname">{{ student.surname }}</td>
                                 <td >
                                     {% for tafofstudent in TafofStudent %}
@@ -93,7 +93,7 @@
                                                 <div>{{'Pas de Taf'}}</div>
                                             {% else %}
                                             {% for taf in tafofstudent[1] %}
-                                                <div class="taf">{{ taf.name }}</div>
+                                                <div ><a class="link-dark taf" href="{{ url_for('ShowTaf',name=name,TafCode=taf.code) }}"> {{ taf.name }}</a></div>
                                             {% endfor %}
                                                 {% endif %}
                                         {% endif %}
@@ -166,7 +166,6 @@ slider.noUiSlider.on('change', function (newValues, handle) {
         $('#search-table tr').filter(function () {
             var name = $(this).find('.name').text().toLowerCase();
             var surname = $(this).find('.surname').text().toLowerCase();
-            var year = $(this).find('.year').text().toLowerCase();
 
             var nameMatch = name.indexOf(nameValue) > -1;
             var surnameMatch = surname.indexOf(surnameValue) > -1;
@@ -179,13 +178,14 @@ slider.noUiSlider.on('change', function (newValues, handle) {
                         yearMatch = true;
                     }
                 });
-            console.log(yearMatch)
+            console.log(selected)
             var tafMatch = true;
             if (selected.length > 0) {
                 tafMatch = false; // Assume false until a match is found
 
                 $(this).find('.taf').each(function () {
-                    if (selected.indexOf($(this).text()) > -1) {
+
+                    if ($(this).text().toLowerCase().indexOf(selected) > -1) {
                         tafMatch = true;
                     }
                 });
