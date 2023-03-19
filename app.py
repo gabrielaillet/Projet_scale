@@ -11,7 +11,7 @@ from Forms.Forms import *
 from database.querys.Add import *
 from database.models import *
 from database.database import init_database
-from database.querys.Delete import delStudent, delEntreprise
+from database.querys.Delete import delStudent
 from database.querys.change import ChangeProfile, changeClassProm, changeTaf
 
 loremipsum = "# Linguae habeat deus quaeratur ignes tempora regni\n " \
@@ -37,8 +37,9 @@ def populate_database():
     Student2 = student(name="Bernard", surname="Yves")
     Student3 = student(name="Berger", surname="Arnaud")
     Entreprise = entreprise(name="entreprise test")
-    Stage = stage(student_id = 1, entreprise_id = 1, description="lorem ipsum")
-    Stage2 = stage(student_id=2, entreprise_id=1, description="lorem ipsum2")
+    Stage = stage(student_id = 1, entreprise_id = 2, description="lorem ipsum",nom="Data Scientist")
+    Stage3 = stage(student_id=1, entreprise_id=1, description="lorem ipsum",nom="Développeur Web")
+    Stage2 = stage(student_id=2, entreprise_id=1, description="lorem ipsum2",nom="Cybersécurité")
     Taf = taf(name="developpement logiciel",code="DCL",description=loremipsum)
     Taf2 = taf(name="developpement2", code="DCL2",description=loremipsum)
     Taf3 = taf(name="DEMIN*",code="DEMIN*",description=loremipsum)
@@ -58,6 +59,7 @@ def populate_database():
     db.session.add(Taf3)
     db.session.add(Taf4)
     db.session.add(Stage)
+    db.session.add(Stage3)
     db.session.add(Stage2)
     db.session.add(Entreprise)
     db.session.add(Profile)
@@ -72,7 +74,7 @@ def populate_database():
 
 app = flask.Flask(__name__)
 app.config["SECRET_KEY"] = "secret_key1234"
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///C:\\Users\\DELL\\Downloads\\ue_web_example-tp_relations_flask\\database\\database.db"
+app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///C:\\Users\\Yves\\Desktop\\WEB\\Projet_scale-master\\database\\database.db"
 db.init_app(app) # (1) flask prend en compte la base de donnee
 with app.test_request_context(): # (2) bloc execute a l'initialisation de Flask
     init_database()
@@ -108,10 +110,14 @@ def showClientInfo(name,id):
     Student = getStudentById(id)
     Profil = getProfileByIdStudent(id)
     Taf = getTadOfStudentByStudentId(id)
-
+    Stages = getallStageByStudentId(id)
+    Entreprises=[]
+    for stage in Stages :
+        Entreprises += entreprise.query.filter_by(entreprise_id=stage.entreprise_id)
 
     return render_template('afficherProfileUtilisateur.html', Student=Student,Profil=Profil,Taf=Taf ,id=id,
-                           classProm=ClassProm, currentYear=current_year,canModify=CanModify,name=name)
+                           classProm=ClassProm, currentYear=current_year,canModify=CanModify,name=name, Stages=Stages
+                           ,Entreprises=Entreprises)
 @app.route("/<string:name>/show/<string:TafCode>",methods=["GET", "POST"])
 def ShowTaf(name,TafCode):
     Taf = getIdTafByCode(TafCode)

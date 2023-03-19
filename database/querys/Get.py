@@ -56,6 +56,7 @@ def getEntrepriseById(entreprise_id):
 def getEntrepriseByName(name):
     Entreprise = entreprise.query.filter_by(name = name).first()
     return Entreprise
+
 def getStageById(stage_id):
     Stage = stage.query.filter_by(stage_id = stage_id).first()
     return Stage
