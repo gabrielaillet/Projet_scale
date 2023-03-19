@@ -1,50 +1,29 @@
 
-<html><head><link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<html><head>
+    <link rel="stylesheet" href="slider.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
 <body>
-<div class="card" style="width: 40rem;">
-    <div class="card-body">
-<form action="{{url_for("add_record")}}" method="post">
-    <label>Add Taff Students </label>
-    {{ formTafStudent.hidden_tag() }}
-    <div>
-    <label for="year">id_student: </label>
-        {{ formTafStudent.student_id }}
-        <label for="year">id_taf: </label>
-        {{ formTafStudent.taf_id }}
-        <label for="year">year: </label>
-        {{ formTafStudent.year }}
-  </div>
-    <input type="submit" value="test">
-</form>
+<div class="slider">
+  <input type="range" class="slider-range" min="0" max="100" value="25">
+  <div class="slider-thumb slider-thumb-left"></div>
+  <div class="slider-thumb slider-thumb-right"></div>
 </div>
-</div>
-<form action="{{url_for("add_record")}}" method="post">
-    <label>Add Student </label>
-    {{ formStudent.hidden_tag() }}
-    <div>
-    <label for="year">name</label>
-        {{ formStudent.name }}
-        <label for="year">surname</label>
-        {{ formStudent.surname }}
-  </div>
-    <input type="submit">
-</form>
 
-<form action="{{url_for("add_record")}}" method="post">
-    <label>Add Taf </label>
-    {{ formTaf.hidden_tag() }}
-    <div>
-    <label for="year">code </label>
-        {{ formTaf.code }}
-        <label for="year">name  </label>
-        {{formTaf.name }}
-  </div>
-    <input type="submit">
-</form>
-<form action={{url_for("tableaux")}}>
-            <input type="submit" value="watch db" />
-        </form>
-</body>
+<script>
+const rangeSlider = document.querySelector('.range-slider');
+const range = rangeSlider.querySelector('.range-slider__range');
+const thumbLeft = rangeSlider.querySelector('.range-slider__thumb--left');
+const thumbRight = rangeSlider.querySelector('.range-slider__thumb--right');
+
+range.addEventListener('input', () => {
+  const rangeValue = range.value;
+  const rangeWidth = range.offsetWidth - thumbLeft.offsetWidth;
+  const thumbLeftPosition = rangeValue * rangeWidth / (range.max - range.min);
+  const thumbRightPosition = rangeWidth - thumbLeftPosition;
+  thumbLeft.style.left = `${thumbLeftPosition}px`;
+  thumbRight.style.right = `${thumbRightPosition}px`;
+});
+</script>
 </body>
 </html>

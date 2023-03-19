@@ -46,7 +46,7 @@ def populate_database():
     studentTaf = taf_student(student_id=1,taf_id=1,year=2022)
     studentTaf2 = taf_student(student_id=2, taf_id=2, year=2024)
     Profile = profile(student_id = 1, email = "test@gmail",etat_civil = "Mr",post = "étudiant")
-    Prom1 = class_prom(student_id=1, year=2022)
+    Prom1 = class_prom(student_id=1, year=2020)
     Prom2 = class_prom(student_id=2, year=2022)
     db.session.add(Prom1)
     db.session.add(Prom2)
