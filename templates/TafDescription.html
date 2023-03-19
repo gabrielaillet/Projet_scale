@@ -26,6 +26,18 @@
         </div>
     </div>
 </div>
+<div class="container fixed-bottom mb-3">
+        {% if name=="Admin" %}
+         <div class="row justify-content-center">
+         <div class="col-1">
+
+            <form action={{url_for("editTaf",name=name,TafCode=Taf.code)}}>
+                <input class="btn btn-outline-success" type="submit"  value = "Modifier">
+            </form>
+            </div>
+        {%  endif %}
+    </div>
+</div>
   <script id="myScript" data-text="{{Taf.description}}">
       var myScript = document.getElementById("myScript");
       console.log(myScript);
