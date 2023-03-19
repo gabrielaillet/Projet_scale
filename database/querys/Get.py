@@ -128,3 +128,7 @@ def getPromStudents():
     for l in listnul:
         classPromList += [[setYear.pop(),student.query.filter(student.student_id.in_(l)).all()]]
     return classPromList
+
+def getallStageByStudentId(id):
+    Stages = stage.query.filter_by(student_id = id).all()
+    return Stages

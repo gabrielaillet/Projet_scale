@@ -42,3 +42,4 @@ class stage(db.Model):
     student_id = db.Column(db.Integer)
     entreprise_id = db.Column(db.Integer)
     description = db.Column(db.Text)
+    nom = db.Column(db.Text)
