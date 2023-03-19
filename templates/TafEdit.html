@@ -9,19 +9,31 @@
   <title>Marked in the browser</title>
     {% import 'navBar.jinja2' as nav %}
 </head>
-<body>
+<body style="background-color:#dee7e6;">
 <header>
             {{ nav.renderNavBar(name,id) }}
 </header>
+<br>
+<div class="container">
 <form action="{{url_for("editTaf",name=name, TafCode=Taf.code)}}" method="post"}}>
-<div class="card">
-    {{ TafForm.hidden_tag() }}
-  <div class="text-center"><strong>{{TafForm.name}}-{{TafForm.code}}</strong></div>
-    <div class="card-body">
-      <div id="content">
-          {{ TafForm.description }}
+    <div class="row">
+        <div class="card">
+            <br>
+            {{ TafForm.hidden_tag() }}
+        <div class="text-center"><strong>{{TafForm.name}}-{{TafForm.code}}</strong></div>
+            <div class="card-body text-center">
+                <div id="content">
+                    {{ TafForm.description }}
+                </div>
+            </div>
+        </div>
+        <div class="container fixed-bottom mb-3">
+         <div class="row justify-content-center">
+         <div class="col-1">
+                <input class="btn btn-outline-success" type="submit"  value = "Modifier">
+            </div>
     </div>
-        <input type="submit">
+</div>
   </div>
 </div>
 </form>
