@@ -81,10 +81,10 @@
                                 <th>Année</th>
                             </tr>
                         </thead>
-                        <tbody id="search-table">
+                        <tbody id="search-table" >
                             {% for student in Students %}
                             <tr>
-                                <td  class="name">{{ student.name }}</td>
+                                <td class="name"  ><a class="link-dark" href="{{ url_for('showClientInfo',name=name,id=student.student_id) }}"> {{ student.name }}</a></td>
                                 <td class="surname">{{ student.surname }}</td>
                                 <td >
                                     {% for tafofstudent in TafofStudent %}

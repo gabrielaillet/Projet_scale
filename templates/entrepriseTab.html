@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD"
+      crossorigin="anonymous">
+
+    {% import 'navBar.jinja2' as nav %}
+</head>
+<body style="background-color:#dee7e6;">
+<header>
+            {{ nav.renderNavBar(name,id) }}
+</header>
+<table class="table table-bordered border-dark">
+                        <thead>
+                            <tr>
+                                <th>Entreprise</th>
+                                {% if name=='Admin' %}
+                                     <th>Action</th>
+                                {% endif %}
+
+                            </tr>
+                        </thead>
+                        <tbody >
+                            {% for entreprise in Entreprise %}
+                            <tr>
+                                <td >{{ entreprise.name }}</td>
+                                {% if name=='Admin' %}
+                                     <td>
+                                     <form action="{{ url_for("supprimerEntreprise",name=name,id=entreprise.entreprise_id) }}">
+                                     <input type="submit" value="Supprimer" >
+                                     </form>
+                                     </td>
+                                {% endif %}
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+
+</body>
+</html>

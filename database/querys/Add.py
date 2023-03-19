@@ -62,3 +62,22 @@ def addClassProm(form):
     save_object_to_db(ClassProm)
     return ClassProm
 
+def addEntreprise(form):
+    Entreprise = entreprise(name=form.name.data)
+    save_object_to_db(Entreprise)
+
+def checkforSimilarEntreprise(form):
+    entreprises = entreprise.query.all()
+    for e in entreprises:
+        if(e.name.lower().find(form.name.data) > -1):
+            return True
+    else:
+        return False
+
+def returnSimilarEntreprise(form):
+    entreprises = entreprise.query.all()
+    for e in entreprises:
+        if(e.name.lower().find(form.name.data) > -1):
+            return e.name
+    else:
+        return form.name.data

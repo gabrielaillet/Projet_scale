@@ -11,7 +11,7 @@ from Forms.Forms import *
 from database.querys.Add import *
 from database.models import *
 from database.database import init_database
-from database.querys.Delete import delStudent
+from database.querys.Delete import delStudent, delEntreprise
 from database.querys.change import ChangeProfile, changeClassProm, changeTaf
 
 loremipsum = "# Linguae habeat deus quaeratur ignes tempora regni\n " \
@@ -85,6 +85,17 @@ def prom(name):
     classProm = getPromStudents()
     print(classProm,file=sys.stderr)
     return render_template("PromotionTab.html",classProm=classProm,name=name,id=1)
+
+@app.route("/<string:name>/del/entreprise/<int:id>",methods=["GET", "POST"])
+def supprimerEntreprise(name,id):
+    delEntreprise(id)
+    return  redirect(url_for('EntrepriseTab',name=name))
+
+@app.route("/<string:name>/entreprise",methods=["GET", "POST"])
+def EntrepriseTab(name):
+    Entreprise = entreprise.query.all()
+    print(Entreprise)
+    return render_template("entrepriseTab.html",Entreprise=Entreprise,name=name,id=1)
 @app.route("/<string:name>/show/<int:id>/",methods=["GET", "POST"])
 def showClientInfo(name,id):
     CanModify = str(id) == name
@@ -130,6 +141,7 @@ def adminTab(name):
         formTaf = TafForm()
         formTafStudent = TafStudentForm()
         formClassProm = classPromForm()
+        entrepriseForm = EntrepriseForm()
         formClassProm.student.choices = getStudentNameSurnameForForm()
         Tafs = taf.query.all()
         Student = student.query.all()
@@ -138,18 +150,24 @@ def adminTab(name):
 
                 return render_template('AdminTab.html', NewStudentForm=NewStudentForm, formTaf=formTaf,
                                        formTafStudent=formTafStudent, Tafs=Tafs, Student=Student,
-                                       Promotion=Promotion,name=name,formClassProm=formClassProm)
+                                       Promotion=Promotion,name=name,formClassProm=formClassProm,
+                                       entrepriseForm=entrepriseForm)
         if flask.request.method == 'POST':
 
                 formTaf.validate()
                 if(formTaf.validate_on_submit()):
                     addTaf(formTaf)
                     Tafs = taf.query.all()
+
                 if(formTafStudent.validate_on_submit()):
                     addTafStudent(formTafStudent)
-
+                    return redirect(url_for('tableaux',name=name))
                 if(NewStudentForm.validate_on_submit()):
                     addNewStudent(NewStudentForm)
+                if(entrepriseForm.validate_on_submit()):
+                    if(not checkforSimilarEntreprise(entrepriseForm)):
+                        addEntreprise(entrepriseForm)
+                        redirect(url_for('EntrepriseTab',name=name))
 
 
                 if(formClassProm.validate_on_submit()):
@@ -162,7 +180,8 @@ def adminTab(name):
 
                 return render_template('AdminTab.html', NewStudentForm=NewStudentForm, formTaf=formTaf,
                                        formTafStudent=formTafStudent, Tafs=Tafs, Student=Student,
-                                       Promotion=Promotion, name=name, formClassProm=formClassProm)
+                                       Promotion=Promotion, name=name, formClassProm=formClassProm,
+                                       entrepriseForm=entrepriseForm)
 @app.route("/<string:name>/edit/<int:id>",methods=["GET", "POST"])
 def changeClientInfo(name,id):
     ClassProm = getClassProm(id)

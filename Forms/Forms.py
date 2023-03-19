@@ -75,9 +75,7 @@ class classPromForm(FlaskForm):
 
 
 
-class EntrepriseForm(FlaskForm):
-    entreprise_id = HiddenField()
-    year = StringField('code')
+
 
 class StageForm(FlaskForm):
     stage_id = HiddenField()
@@ -91,7 +89,7 @@ class ProfileEtudiantForm(FlaskForm):
     surname = StringField('code')
     email = StringField('code')
     etat_civil = RadioField('code',choices=[('Mr', 'Mr'), ('Mme', 'Mme'), ('Autre', 'Autre')])
-    post = RadioField('code',choices=[('étudiant', 'étudiant'), ('enseignant', 'enseignant'), ('salarier', 'salarier'), ("chef d'entreprise", "chef d'entreprise")])
+    post = StringField('code')
 
     taf1 = RadioField('code',choices=[],default="pas de taf",validators=[InputRequired(message="Please enter taf1")])
     year = IntegerField('Year')
@@ -114,3 +112,7 @@ class AddNewStudentForm(FlaskForm):
     year_range = range(current_year, current_year + 30)
     year_choices = [(str(year), str(year)) for year in year_range]
     year = SelectField('Choose a year', choices=year_choices)
+
+class EntrepriseForm(FlaskForm):
+    entreprise_id = IntegerField()
+    name = StringField('code')
