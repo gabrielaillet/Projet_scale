@@ -80,4 +80,12 @@ def returnSimilarEntreprise(form):
         if(e.name.lower().find(form.name.data) > -1):
             return e.name
     else:
+        Entreprise = entreprise(name=form.name.data)
+        save_object_to_db(Entreprise)
         return form.name.data
+
+def addStage(form,idstudent):
+    entreprisetext = returnSimilarEntreprise(form)
+    idEntreprise = entreprise.query.filter_by(name=entreprisetext).first().entreprise_id
+    Stage = stage(student_id=idstudent,description=form.description.data,nom=form.nom.data,info_tuteur=form.info_tuteur.data, entreprise_id=idEntreprise)
+    save_object_to_db(Stage)

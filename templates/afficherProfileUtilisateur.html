@@ -80,11 +80,9 @@
     </h2>
     <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
       <div class="accordion-body">
-      {% for stage in Stages %}
-          {% for entreprise in Entreprises %}
-          <strong>{{ stage.nom }} : {{ entreprise }}</strong>
-          <p>{{ stage.description }}</p>
-      {% endfor %}
+      {% for i in range(lenStage) %}
+          <strong>{{ Stages[i].nom }} : {{ Entreprises[i] }}</strong>
+          <p>{{ Stages[i].description }}</p>
       {% endfor %}
       </div>
   </div>

@@ -11,7 +11,7 @@ from Forms.Forms import *
 from database.querys.Add import *
 from database.models import *
 from database.database import init_database
-from database.querys.Delete import delStudent
+from database.querys.Delete import delStudent, delEntreprise
 from database.querys.change import ChangeProfile, changeClassProm, changeTaf
 
 loremipsum = "# Linguae habeat deus quaeratur ignes tempora regni\n " \
@@ -111,13 +111,17 @@ def showClientInfo(name,id):
     Profil = getProfileByIdStudent(id)
     Taf = getTadOfStudentByStudentId(id)
     Stages = getallStageByStudentId(id)
+    lenStage=length_filter(Stages)
     Entreprises=[]
-    for stage in Stages :
-        Entreprises += entreprise.query.filter_by(entreprise_id=stage.entreprise_id)
-
+    for stage in Stages:
+        entreprise_obj = entreprise.query.filter_by(entreprise_id=stage.entreprise_id).first()
+        if entreprise_obj:
+            Entreprises.append(entreprise_obj.name)
+    print(Entreprises)
+    print(Stages)
     return render_template('afficherProfileUtilisateur.html', Student=Student,Profil=Profil,Taf=Taf ,id=id,
                            classProm=ClassProm, currentYear=current_year,canModify=CanModify,name=name, Stages=Stages
-                           ,Entreprises=Entreprises)
+                           ,Entreprises=Entreprises,lenStage=lenStage)
 @app.route("/<string:name>/show/<string:TafCode>",methods=["GET", "POST"])
 def ShowTaf(name,TafCode):
     Taf = getIdTafByCode(TafCode)
@@ -196,6 +200,7 @@ def changeClientInfo(name,id):
     Student = getStudentById(id)
     Profile = getProfileByIdStudent(id)
     Taf = getTadOfStudentByStudentId(id)
+    stageform = StageForm()
     if flask.request.method == 'GET':
         formProfile = ProfileEtudiantForm(student_id=id, name=Student.name, surname=Student.surname, email=Profile.email,
                                           etat_civil=Profile.etat_civil, post=Profile.post, Student=Student)
@@ -218,7 +223,7 @@ def changeClientInfo(name,id):
         formProfile.taf4.choices = tafCode
         formProfile.year.data = ClassProm.year
         return render_template('ChangePersonnaleData.jinja2',formProfile=formProfile, id=id,
-                               classProm = ClassProm,currentYear=current_year,name=name,Student=Student)
+                               classProm = ClassProm,currentYear=current_year,name=name,Student=Student,stageform=stageform)
     else:
 
         formProfile.year.data = ClassProm.year
@@ -227,6 +232,8 @@ def changeClientInfo(name,id):
         formProfile.taf3.choices = getTafCode()
         formProfile.taf4.choices = getTafCode()
 
+        if stageform.validate_on_submit():
+            addStage(stageform,id)
 
         if formProfile.validate_on_submit():
             print(formProfile.taf1.data, file=sys.stderr)
@@ -234,7 +241,7 @@ def changeClientInfo(name,id):
             return redirect(url_for('showClientInfo', name=name,id=id))
 
         return render_template('ChangePersonnaleData.jinja2',methods="GET", formProfile=formProfile, id=id,
-                               classProm = ClassProm,currentYear=current_year,Namecompte=name,Student=Student)
+                               classProm = ClassProm,currentYear=current_year,name=name,Namecompte=name,Student=Student,stageform=stageform)
 @app.route("/s/3",methods=["GET", "POST"])
 def add_record():
     formStudent = StudentForm()

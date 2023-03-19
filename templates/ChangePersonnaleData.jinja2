@@ -87,7 +87,13 @@
     </h2>
     <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
       <div class="accordion-body">
-      okokokoko
+          <form action="{{ url_for("changeClientInfo",id=id, name=name)}}" method="post"> {{ stageform.hidden_tag() }}
+          <div><label>Nom : </label>{{ stageform.nom }}</div>
+          <div><label>Entreprise : </label>{{ stageform.name }}</div>
+          <div><label>Description : </label>{{ stageform.description }}</div>
+          <div><label>Coordoonées du tuteur : </label>{{ stageform.info_tuteur }}</div>
+          <input type="submit" value="Ajouter">
+          </form>
       </div>
     </div>
   </div>

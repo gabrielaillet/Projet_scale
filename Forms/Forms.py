@@ -78,10 +78,10 @@ class classPromForm(FlaskForm):
 
 
 class StageForm(FlaskForm):
-    stage_id = HiddenField()
-    student_id = IntegerField('id student',validators=[InputRequired()])
-    entreprise_id = IntegerField('id student',validators=[InputRequired()])
-    description = StringField('code')
+    name = StringField('nom entreprise')
+    description = TextAreaField('Ajoutez une description')
+    nom = StringField('code')
+    info_tuteur = TextAreaField('Ajoutez les coordonnées du tuteur')
 
 class ProfileEtudiantForm(FlaskForm):
     student_id = IntegerField()
