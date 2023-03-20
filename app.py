@@ -88,7 +88,7 @@ def populate_database():
 
 app = flask.Flask(__name__)
 app.config["SECRET_KEY"] = "secret_key1234"
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///C:\\Users\\Yves\\Desktop\\WEB\\Projet_scale-master\\database\\database.db"
+app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///C:\\Users\\DELL\\Downloads\\ue_web_example-tp_relations_flask\\database\\database.db"
 db.init_app(app) # (1) flask prend en compte la base de donnee
 with app.test_request_context(): # (2) bloc execute a l'initialisation de Flask
     init_database()
@@ -107,6 +107,13 @@ def prom(name):
 def supprimerEntreprise(name,id):
     delEntreprise(id)
     return  redirect(url_for('EntrepriseTab',name=name))
+
+@app.route("/<string:name>/entreprise/<int:idEntreprise>",methods=["GET", "POST"])
+def EntrepriseTabList(name,idEntreprise):
+    Entreprise = entreprise.query.filter_by(entreprise_id = idEntreprise)
+    StagesRaw = stage.query.filty_by(entreprise_id = idEntreprise).all()
+
+    return render_template("entrepriseTab.html",Entreprise=Entreprise,name=name,id=1)
 
 @app.route("/<string:name>/entreprise",methods=["GET", "POST"])
 def EntrepriseTab(name):
