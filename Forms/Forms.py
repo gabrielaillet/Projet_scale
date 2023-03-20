@@ -79,9 +79,9 @@ class classPromForm(FlaskForm):
 
 class StageForm(FlaskForm):
     name = StringField('nom entreprise')
-    description = TextAreaField('Ajoutez une description')
+    description = TextAreaField('Ajoutez une description',render_kw={'style': 'width:100%;height:30vh'})
     nom = StringField('codetes')
-    info_tuteur = TextAreaField('Ajoutez les coordonnées du tuteur')
+    info_tuteur = TextAreaField('Ajoutez les coordonnées du tuteur',render_kw={'style': 'width:100%;height:30vh'})
 
 class ProfileEtudiantForm(FlaskForm):
     student_id = IntegerField()

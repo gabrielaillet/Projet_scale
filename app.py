@@ -126,13 +126,13 @@ def EntrepriseTabList(name,idEntreprise):
     for sr in StagesRaw:
         Student = student.query.filter_by(student_id=sr.student_id).first()
         Stages += [[Student,sr.nom]]
-
     return render_template("listeStageEntreprise.html",entreprise=Entreprise,name=name,id=1,Stages=Stages)
 
 @app.route("/<string:name>/entreprise",methods=["GET", "POST"])
 def EntrepriseTab(name):
     Entreprise = entreprise.query.all()
-    return render_template("entrepriseTab.html",Entreprise=Entreprise,name=name,id=1)
+    NbreEntreprise = len(entreprise.query.all())
+    return render_template("entrepriseTab.html",Entreprise=Entreprise,name=name,id=1,NbreEntreprise=NbreEntreprise)
 @app.route("/<string:name>/show/<int:id>/",methods=["GET", "POST"])
 def showClientInfo(name,id):
     CanModify = str(id) == name

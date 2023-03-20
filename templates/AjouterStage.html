@@ -14,20 +14,44 @@
 <header>
             {{ nav.renderNavBar(name,id) }}
 </header>
-<body>
+<body style="background-color:#dee7e6;">
+<br>
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-8">
 <div class="card">
     <div class="card-body">
-    <form action="{{ url_for("addStageTab",id=id, name=name)}}" method="post"> {{ stageform.hidden_tag() }}
-          <div><label>Nom : </label>{{ stageform.nom }}</div>
-          <div><label>Entreprise : </label>{{ stageform.name }}</div>
-          <div><label>Description : </label>{{ stageform.description }}</div>
-          <div><label>Coordoonées du tuteur : </label>{{ stageform.info_tuteur }}</div>
-          <input type="submit" value="Ajouter">
-          </form></div>
+        <form action="{{ url_for("addStageTab",id=id, name=name)}}" method="post">
+            {{ stageform.hidden_tag() }}
+            <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <label>Nom : </label>{{ stageform.nom(class="form-control-lg") }}
+                </div>
+                <div class="col-md-6">
+                    <label>Entreprise : </label>{{ stageform.name(class="form-control-lg") }}
+                </div>
+                </div>
+                <br>
+                <div class="container">
+                    <div class="row">
+                <div class="col-6">
+                    {{ stageform.description(class="form-control-lg", placeholder="Description") }}
+                </div>
+                <div class="col-md-6">
+                    {{ stageform.info_tuteur(class="form-control-lg", placeholder="Coordonnées du tuteur") }}
+                </div>
+                        </div>
+                    </div>
+                <div class="card-body text-center">
+                            <input class="btn btn-outline-success" type="submit" value="Ajouter">
+                                </div>
+            </div>
+        </form>
     </div>
+</div>
+
+
         </div>
 </div>
     </div>
