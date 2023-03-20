@@ -30,7 +30,7 @@
                         <tbody >
                             {% for entreprise in Entreprise %}
                             <tr>
-                                <td >{{ entreprise.name }}</td>
+                                <td ><a class="link-dark taf" href="{{ url_for("EntrepriseTabList",name=name,idEntreprise=entreprise.entreprise_id) }}">{{ entreprise.name }}</a></td >
                                 {% if name=='Admin' %}
                                      <td>
                                      <form action="{{ url_for("supprimerEntreprise",name=name,id=entreprise.entreprise_id) }}">

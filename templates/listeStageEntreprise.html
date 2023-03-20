@@ -27,9 +27,9 @@
                         <tbody >
                             {% for stage in Stages %}
                             <tr>
-                                <td >{{ stage[0] }}</td>
-                                <td >{{ stage[1] }}</td>
-                                <td >{{ entreprise[2]}}</td>
+                                <td ><a class="link-dark taf" href="{{ url_for("showClientInfo",id=stage[0].student_id,name=name) }}">{{ stage[0].name }}</a></td>
+                                <td >{{ stage[0].surname }}</td>
+                                <td >{{ stage[1]}}</td>
                             </tr>
                             {% endfor %}
                         </tbody>

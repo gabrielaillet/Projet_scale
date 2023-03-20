@@ -110,14 +110,14 @@ def supprimerEntreprise(name,id):
 
 @app.route("/<string:name>/entreprise/<int:idEntreprise>",methods=["GET", "POST"])
 def EntrepriseTabList(name,idEntreprise):
-    Entreprise = entreprise.query.filter_by(entreprise_id = idEntreprise)
-    StagesRaw = stage.query.filty_by(entreprise_id = idEntreprise).all()
+    Entreprise = entreprise.query.filter_by(entreprise_id = idEntreprise).first()
+    StagesRaw = stage.query.filter_by(entreprise_id = idEntreprise).all()
     Stages = []
     for sr in StagesRaw:
         Student = student.query.filter_by(student_id=sr.student_id).first()
-        Stages += [Student.name,Student.surname,StagesRaw.name]
+        Stages += [[Student,sr.nom]]
 
-    return render_template("entrepriseTab.html",Entreprise=Entreprise,name=name,id=1,Stages=Stages)
+    return render_template("listeStageEntreprise.html",entreprise=Entreprise,name=name,id=1,Stages=Stages)
 
 @app.route("/<string:name>/entreprise",methods=["GET", "POST"])
 def EntrepriseTab(name):
