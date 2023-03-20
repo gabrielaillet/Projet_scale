@@ -126,9 +126,12 @@ noUiSlider.create(slider, {
   },
   step: 1,
 });
-
-var values = [2015, 2018];
 var test = ['2015','2016','2017','2018'];
+var values = [2015, 2030];
+for(let i = 0; i  < values[1]-values[0]+1;i++){
+     test.push((values[0] + i).toString());
+  }
+console.log(test)
 var sliderValue = document.getElementById('slider-value');
 
 

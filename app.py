@@ -88,7 +88,7 @@ def populate_database():
 
 app = flask.Flask(__name__)
 app.config["SECRET_KEY"] = "secret_key1234"
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///C:\\Users\\Yves\\Desktop\\WEB\\Projet_scale-master\\database\\database.db"
+app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///C:\\Users\\DELL\\Downloads\\ue_web_example-tp_relations_flask\\database\\database.db"
 db.init_app(app) # (1) flask prend en compte la base de donnee
 with app.test_request_context(): # (2) bloc execute a l'initialisation de Flask
     init_database()
@@ -100,7 +100,6 @@ with app.test_request_context(): # (2) bloc execute a l'initialisation de Flask
 @app.route("/<string:name>/prom",methods=["GET", "POST"])
 def prom(name):
     classProm = getPromStudents()
-    print(classProm,file=sys.stderr)
     return render_template("PromotionTab.html",classProm=classProm,name=name,id=1)
 
 @app.route("/<string:name>/del/entreprise/<int:id>",methods=["GET", "POST"])
@@ -177,7 +176,6 @@ def editTaf(name,TafCode):
                 TafForm = TafFormWithDescription()
 
                 if(TafForm.validate_on_submit()):
-                    print(TafForm.description, file=sys.stderr)
                     changeTaf(TafForm,Taf)
                     return redirect(url_for("ShowTaf",name=name,TafCode=TafForm.code.data,id=0))
                 return render_template('TafEdit.html',name=name, Taf=Taf, TafForm=TafForm,id=0)
@@ -329,7 +327,6 @@ def tableaux(name):
     TafsTrio =[]
     lastTrio = []
     entiertrio = len(Taf)%3
-    print(int((len(Taf)-entiertrio)/3))
     for i in range(0,int((len(Taf)-entiertrio)),3):
         TafsTrio += [[Taf[i],Taf[i+1],Taf[i+2]]]
     for j in range((len(Taf)-entiertrio),len(Taf)):

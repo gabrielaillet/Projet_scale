@@ -44,7 +44,7 @@ def addTaf(form):
                                                                         '*possent*. Recessu **innumeraeque** artes.' +
                                                                         '## Quamvis cum quin virgo trementi populos metalla')
     save_object_to_db(Taf)
-    print(Taf.description,file=sys.stderr)
+
     return Taf
 
 
@@ -55,9 +55,7 @@ def addTafStudent(form):
 
 def addClassProm(form):
     studentInfo = form.student.data.split()
-    print(student,file=sys.stderr)
     student_id = student.query.filter_by(name=studentInfo[0],surname=studentInfo[1]).first().student_id
-    print(student_id,file=sys.stderr)
     ClassProm = class_prom(student_id = student_id,year = form.year.data)
     save_object_to_db(ClassProm)
     return ClassProm
@@ -85,8 +83,8 @@ def returnSimilarEntreprise(form):
         return form.name.data
 
 def addStage(form,idstudent):
-    print(1)
     entreprisetext = returnSimilarEntreprise(form)
     idEntreprise = entreprise.query.filter_by(name=entreprisetext).first().entreprise_id
-    Stage = stage(student_id=idstudent,description=form.description.data,nom=form.nom.data,info_tuteur=form.info_tuteur.data, entreprise_id=idEntreprise)
+    Stage = stage(student_id=idstudent,description=form.description.data,nom=form.nom.data,
+                  info_tuteur=form.info_tuteur.data, entreprise_id=idEntreprise)
     save_object_to_db(Stage)
