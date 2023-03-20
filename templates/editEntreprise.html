@@ -24,19 +24,27 @@
                             <tr>
                                 <th>Entreprises</th>
                                 {% if name=='Admin' %}
-                                     <th class="text-center">Action</th>
+                                     <th>Action</th>
                                 {% endif %}
 
                             </tr>
                         </thead>
                         <tbody >
                             {% for entreprise in Entreprise %}
-                            <tr>
-                                <td ><a class="link-dark taf" href="{{ url_for("EntrepriseTabList",name=name,idEntreprise=entreprise.entreprise_id) }}">{{ entreprise.name }}</a></td >
+                            <tr>{% if entreprise.entreprise_id == idE %}
+                                <form action="{{ url_for("modifierEntreprise",name=name,id=entreprise.entreprise_id)}}" method="post">
+                                {{ entrepriseform.hidden_tag() }}
+                                <td >{{ entrepriseform.name }}<td>
+                                        <input class="btn btn-success" type="submit"  value = "valider modification">
+                                </form>
+                                {% else %}
+                                <td >
+                                    <a class="link-dark taf" href="{{ url_for("EntrepriseTabList",name=name,idEntreprise=entreprise.entreprise_id) }}">{{ entreprise.name }}</a></td >
+
                                 {% if name=='Admin' %}
                                      <td>
                                      <div class="container">
-                                         <div class="row " >
+                                         <div class="row">
                                              <div class="col-6">
                                      <form action="{{ url_for("supprimerEntreprise",name=name,id=entreprise.entreprise_id) }}">
                                         <input class="btn btn-danger" type="submit"  value = "supprimer"> </form>
@@ -47,6 +55,7 @@
                                          </div>
                                      </td>
                                 {% endif %}
+                            {% endif %}
                             </tr>
                             {% endfor %}
                         </tbody>

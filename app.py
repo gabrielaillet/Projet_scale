@@ -12,7 +12,7 @@ from database.querys.Add import *
 from database.models import *
 from database.database import init_database
 from database.querys.Delete import delStudent, delEntreprise, delTaf
-from database.querys.change import ChangeProfile, changeClassProm, changeTaf, changeStage
+from database.querys.change import ChangeProfile, changeClassProm, changeTaf, changeStage, changeEntreprise
 
 loremipsum = "# Linguae habeat deus quaeratur ignes tempora regni\n " \
              "## Et rerum peregrina tamen at longisque mutataque\n" \
@@ -88,7 +88,7 @@ def populate_database():
 
 app = flask.Flask(__name__)
 app.config["SECRET_KEY"] = "secret_key1234"
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///C:\\Users\\Yves\\Desktop\\WEB\\Projet_scale\\database\\database.db"
+app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///C:\\Users\\DELL\\Downloads\\ue_web_example-tp_relations_flask\\database\\database.db"
 db.init_app(app) # (1) flask prend en compte la base de donnee
 with app.test_request_context(): # (2) bloc execute a l'initialisation de Flask
     init_database()
@@ -106,6 +106,22 @@ def prom(name):
 def supprimerEntreprise(name,id):
     delEntreprise(id)
     return  redirect(url_for('EntrepriseTab',name=name))
+
+@app.route("/<string:name>/edit/entreprise/<int:id>",methods=["GET", "POST"])
+def modifierEntreprise(name,id):
+    Entreprise = entreprise.query.all()
+    NbreEntreprise = len(entreprise.query.all())
+    if flask.request.method == 'GET':
+        entrepriseform = EntrepriseForm(name=getEntrepriseById(id).name)
+        return  render_template('editEntreprise.html',name=name,Entreprise=Entreprise,NbreEntreprise=NbreEntreprise,id=1,idE=id,entrepriseform=entrepriseform)
+    if flask.request.method == 'POST':
+        entrepriseform = EntrepriseForm()
+        if entrepriseform.validate_on_submit():
+            changeEntreprise(entrepriseform,id)
+            return redirect(url_for('EntrepriseTab',name=name,id=id))
+        return  render_template('editEntreprise.html',name=name,Entreprise=Entreprise,NbreEntreprise=NbreEntreprise,id=1,idE=id,entrepriseform=entrepriseform)
+
+
 
 @app.route("/<string:name>/del/taf/<string:TafCode>",methods=["GET", "POST"])
 def supprimerTaf(name,TafCode):

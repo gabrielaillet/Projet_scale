@@ -70,3 +70,8 @@ def changeStage(form,idstudent,idStage):
     Stage = stage(student_id=idstudent,description=form.description.data,nom=form.nom.data,
                   info_tuteur=form.info_tuteur.data, entreprise_id=idEntreprise)
     save_object_to_db(Stage)
+
+def changeEntreprise(form,id):
+    Entreprise = entreprise(entreprise_id=id,name=form.name.data)
+    delEntreprise(id)
+    save_object_to_db(Entreprise)
