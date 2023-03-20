@@ -61,3 +61,11 @@ def changeTaf(form,Taf):
     Taf = taf(taf_id=Taf.taf_id,name=form.name.data,code=form.code.data,description=form.description.data)
     save_object_to_db(Taf)
     return Taf
+
+def changeStage(form,idstudent,idStage):
+    delStage(idStage)
+    entreprisetext = returnSimilarEntreprise(form)
+    idEntreprise = entreprise.query.filter_by(name=entreprisetext).first().entreprise_id
+    Stage = stage(student_id=idstudent,description=form.description.data,nom=form.nom.data,
+                  info_tuteur=form.info_tuteur.data, entreprise_id=idEntreprise)
+    save_object_to_db(Stage)

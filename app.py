@@ -12,7 +12,7 @@ from database.querys.Add import *
 from database.models import *
 from database.database import init_database
 from database.querys.Delete import delStudent, delEntreprise
-from database.querys.change import ChangeProfile, changeClassProm, changeTaf
+from database.querys.change import ChangeProfile, changeClassProm, changeTaf, changeStage
 
 loremipsum = "# Linguae habeat deus quaeratur ignes tempora regni\n " \
              "## Et rerum peregrina tamen at longisque mutataque\n" \
@@ -161,6 +161,16 @@ def addStageTab(name,id):
         addStage(stageform,id)
         return redirect(url_for("showClientInfo",name=name,id=id))
     return render_template("AjouterStage.html",name=name,id=id,stageform=stageform)
+
+@app.route("/<string:name>/edit/<int:id>/<int:idStage>",methods=["GET", "POST"])
+def editStageTab(name,id,idStage):
+    Stage = getStageById(idStage)
+    entreprise_name = entreprise.query.filter_by(entreprise_id=Stage.entreprise_id).first().name
+    stageform = StageForm(description=Stage.description,nom=Stage.nom,name=entreprise_name,info_tuteur=Stage.info_tuteur)
+    if stageform.validate_on_submit():
+        changeStage(stageform,id,idStage)
+        return redirect(url_for("showClientInfo",name=name,id=id))
+    return render_template("ModifierStage.html",name=name,id=id,stageform=stageform,idStage=idStage)
 @app.route("/<string:name>/edit/",methods=["GET", "POST"])
 def adminTab(name):
     if (name == "Admin"):

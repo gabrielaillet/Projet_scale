@@ -84,7 +84,9 @@
     <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
       <div class="accordion-body">
       {% for elemt in StageEntreprise %}
+           <a href="{{ url_for("editStageTab",name=name,id=id,idStage=elemt[0].stage_id) }}">
           <strong>{{ elemt[0].nom }} : {{ elemt[1] }}</strong>
+          </a>
           <p>{{ elemt[0].description }}</p>
       {% endfor %}
       </div>
