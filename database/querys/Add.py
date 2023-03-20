@@ -85,6 +85,7 @@ def returnSimilarEntreprise(form):
         return form.name.data
 
 def addStage(form,idstudent):
+    print(1)
     entreprisetext = returnSimilarEntreprise(form)
     idEntreprise = entreprise.query.filter_by(name=entreprisetext).first().entreprise_id
     Stage = stage(student_id=idstudent,description=form.description.data,nom=form.nom.data,info_tuteur=form.info_tuteur.data, entreprise_id=idEntreprise)

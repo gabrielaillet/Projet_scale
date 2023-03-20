@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD"
+      crossorigin="anonymous">
+  <meta charset="utf-8"/>
+  <title>Marked in the browser</title>
+    {% import 'navBar.jinja2' as nav %}
+</head>
+
+<header>
+            {{ nav.renderNavBar(name,id) }}
+</header>
+<body>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-8">
+<div class="card">
+    <div class="card-body">
+    <form action="{{ url_for("addStageTab",id=id, name=name)}}" method="post"> {{ stageform.hidden_tag() }}
+          <div><label>Nom : </label>{{ stageform.nom }}</div>
+          <div><label>Entreprise : </label>{{ stageform.name }}</div>
+          <div><label>Description : </label>{{ stageform.description }}</div>
+          <div><label>Coordoonées du tuteur : </label>{{ stageform.info_tuteur }}</div>
+          <input type="submit" value="Ajouter">
+          </form></div>
+    </div>
+        </div>
+</div>
+    </div>
+</body>
+</html>

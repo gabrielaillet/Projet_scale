@@ -93,7 +93,7 @@
                                                 <div>{{'Pas de Taf'}}</div>
                                             {% else %}
                                             {% for taf in tafofstudent[1] %}
-                                                <div ><a class="link-dark taf" href="{{ url_for('ShowTaf',name=name,TafCode=taf.code) }}"> {{ taf.name }}</a></div>
+                                                <div ><a class="link-dark taf" href="{{ url_for('ShowTaf',id=id,name=name,TafCode=taf.code) }}"> {{ taf.name }}</a></div>
                                             {% endfor %}
                                                 {% endif %}
                                         {% endif %}

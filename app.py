@@ -37,6 +37,7 @@ def populate_database():
     Student2 = student(name="Bernard", surname="Yves")
     Student3 = student(name="Berger", surname="Arnaud")
     Entreprise = entreprise(name="entreprise test")
+    Entreprise2 = entreprise(name="entreprise test2")
     Stage = stage(student_id = 1, entreprise_id = 2, description="lorem ipsum",nom="Data Scientist")
     Stage3 = stage(student_id=1, entreprise_id=1, description="lorem ipsum",nom="Développeur Web")
     Stage2 = stage(student_id=2, entreprise_id=1, description="lorem ipsum2",nom="Cybersécurité")
@@ -47,6 +48,8 @@ def populate_database():
     studentTaf = taf_student(student_id=1,taf_id=1,year=2022)
     studentTaf2 = taf_student(student_id=2, taf_id=2, year=2024)
     Profile = profile(student_id = 1, email = "test@gmail",etat_civil = "Mr",post = "étudiant")
+    Profile2 = profile(student_id = 2, email = "test2@gmail",etat_civil = "Mr",post = "étudiant")
+
     Prom1 = class_prom(student_id=1, year=2020)
     Prom2 = class_prom(student_id=2, year=2022)
     db.session.add(Prom1)
@@ -62,7 +65,9 @@ def populate_database():
     db.session.add(Stage3)
     db.session.add(Stage2)
     db.session.add(Entreprise)
+    db.session.add(Entreprise2)
     db.session.add(Profile)
+    db.session.add(Profile2)
     db.session.commit()
     db.session.add(studentTaf)
     db.session.add(studentTaf2)
@@ -74,11 +79,12 @@ def populate_database():
 
 app = flask.Flask(__name__)
 app.config["SECRET_KEY"] = "secret_key1234"
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///C:\\Users\\Yves\\Desktop\\WEB\\Projet_scale-master\\database\\database.db"
+app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///C:\\Users\\DELL\\Downloads\\ue_web_example-tp_relations_flask\\database\\database.db"
 db.init_app(app) # (1) flask prend en compte la base de donnee
 with app.test_request_context(): # (2) bloc execute a l'initialisation de Flask
     init_database()
     populate_database()
+
 
 
 
@@ -96,7 +102,6 @@ def supprimerEntreprise(name,id):
 @app.route("/<string:name>/entreprise",methods=["GET", "POST"])
 def EntrepriseTab(name):
     Entreprise = entreprise.query.all()
-    print(Entreprise)
     return render_template("entrepriseTab.html",Entreprise=Entreprise,name=name,id=1)
 @app.route("/<string:name>/show/<int:id>/",methods=["GET", "POST"])
 def showClientInfo(name,id):
@@ -106,27 +111,28 @@ def showClientInfo(name,id):
         ClassProm = dict()
         ClassProm['year'] = 0
     current_year = datetime.now().year
-    print(ClassProm.year)
     Student = getStudentById(id)
     Profil = getProfileByIdStudent(id)
+
     Taf = getTadOfStudentByStudentId(id)
     Stages = getallStageByStudentId(id)
     lenStage=length_filter(Stages)
-    Entreprises=[]
+    StageEntreprise=[]
     for stage in Stages:
         entreprise_obj = entreprise.query.filter_by(entreprise_id=stage.entreprise_id).first()
-        if entreprise_obj:
-            Entreprises.append(entreprise_obj.name)
-    print(Entreprises)
-    print(Stages)
+        if(entreprise_obj):
+            StageEntreprise.append([stage,entreprise_obj.name])
+        else:
+            StageEntreprise.append([stage,''])
+
     return render_template('afficherProfileUtilisateur.html', Student=Student,Profil=Profil,Taf=Taf ,id=id,
-                           classProm=ClassProm, currentYear=current_year,canModify=CanModify,name=name, Stages=Stages
-                           ,Entreprises=Entreprises,lenStage=lenStage)
-@app.route("/<string:name>/show/<string:TafCode>",methods=["GET", "POST"])
-def ShowTaf(name,TafCode):
+                           classProm=ClassProm, currentYear=current_year,canModify=CanModify,name=name
+                           ,StageEntreprise=StageEntreprise,lenStage=lenStage)
+@app.route("/<string:name>/show/<int:id>/<string:TafCode>",methods=["GET", "POST"])
+def ShowTaf(name,TafCode,id):
     Taf = getIdTafByCode(TafCode)
     if(Taf != None):
-        return render_template('TafDescription.html',Taf=Taf,name=name)
+        return render_template('TafDescription.html',Taf=Taf,name=name,id=id)
 
 @app.route("/<string:name>/edit/<string:TafCode>",methods=["GET", "POST"])
 def editTaf(name,TafCode):
@@ -135,15 +141,23 @@ def editTaf(name,TafCode):
         if(Taf != None):
             if flask.request.method == 'GET':
                 TafForm = TafFormWithDescription(name=Taf.name,code=Taf.code,description=Taf.description)
-                return render_template('TafEdit.html',name=name, Taf=Taf, TafForm=TafForm)
+                return render_template('TafEdit.html',name=name, Taf=Taf, TafForm=TafForm,id=0)
             if flask.request.method == 'POST':
                 TafForm = TafFormWithDescription()
 
                 if(TafForm.validate_on_submit()):
                     print(TafForm.description, file=sys.stderr)
                     changeTaf(TafForm,Taf)
-                    return redirect(url_for("ShowTaf",name=name,TafCode=TafForm.code.data))
-                return render_template('TafEdit.html',name=name, Taf=Taf, TafForm=TafForm)
+                    return redirect(url_for("ShowTaf",name=name,TafCode=TafForm.code.data,id=0))
+                return render_template('TafEdit.html',name=name, Taf=Taf, TafForm=TafForm,id=0)
+
+@app.route("/<string:name>/edit/<int:id>/stageAdd",methods=["GET", "POST"])
+def addStageTab(name,id):
+    stageform = StageForm()
+    if stageform.validate_on_submit():
+        addStage(stageform,id)
+        return redirect(url_for("showClientInfo",name=name,id=id))
+    return render_template("AjouterStage.html",name=name,id=id,stageform=stageform)
 @app.route("/<string:name>/edit/",methods=["GET", "POST"])
 def adminTab(name):
     if (name == "Admin"):
@@ -161,7 +175,7 @@ def adminTab(name):
                 return render_template('AdminTab.html', NewStudentForm=NewStudentForm, formTaf=formTaf,
                                        formTafStudent=formTafStudent, Tafs=Tafs, Student=Student,
                                        Promotion=Promotion,name=name,formClassProm=formClassProm,
-                                       entrepriseForm=entrepriseForm)
+                                       entrepriseForm=entrepriseForm,id=0)
         if flask.request.method == 'POST':
 
                 formTaf.validate()
@@ -191,7 +205,7 @@ def adminTab(name):
                 return render_template('AdminTab.html', NewStudentForm=NewStudentForm, formTaf=formTaf,
                                        formTafStudent=formTafStudent, Tafs=Tafs, Student=Student,
                                        Promotion=Promotion, name=name, formClassProm=formClassProm,
-                                       entrepriseForm=entrepriseForm)
+                                       entrepriseForm=entrepriseForm,id=0)
 @app.route("/<string:name>/edit/<int:id>",methods=["GET", "POST"])
 def changeClientInfo(name,id):
     ClassProm = getClassProm(id)
@@ -199,6 +213,7 @@ def changeClientInfo(name,id):
     formProfile = ProfileEtudiantForm(student_id=id)
     Student = getStudentById(id)
     Profile = getProfileByIdStudent(id)
+
     Taf = getTadOfStudentByStudentId(id)
     stageform = StageForm()
     if flask.request.method == 'GET':
@@ -236,7 +251,6 @@ def changeClientInfo(name,id):
             addStage(stageform,id)
 
         if formProfile.validate_on_submit():
-            print(formProfile.taf1.data, file=sys.stderr)
             ChangeProfile(formProfile)
             return redirect(url_for('showClientInfo', name=name,id=id))
 
