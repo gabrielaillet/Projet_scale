@@ -207,7 +207,11 @@ def addStageTab(name,id):
 @app.route("/<string:name>/edit/<int:id>/<int:idStage>",methods=["GET", "POST"])
 def editStageTab(name,id,idStage):
     Stage = getStageById(idStage)
-    entreprise_name = entreprise.query.filter_by(entreprise_id=Stage.entreprise_id).first().name
+    entreprise_name = entreprise.query.filter_by(entreprise_id=Stage.entreprise_id).first()
+    if(not entreprise_name):
+        entreprise_name = ''
+    else:
+        entreprise_name = entreprise_name.name
     stageform = StageForm(description=Stage.description,nom=Stage.nom,name=entreprise_name,info_tuteur=Stage.info_tuteur)
     if stageform.validate_on_submit():
         changeStage(stageform,id,idStage)
