@@ -42,7 +42,10 @@ def populate_database():
     Stage3 = stage(student_id=1, entreprise_id=1, description="lorem ipsum",nom="Développeur Web")
     Stage2 = stage(student_id=2, entreprise_id=1, description="lorem ipsum2",nom="Cybersécurité")
     Taf = taf(name="developpement logiciel",code="DCL",description=loremipsum)
-    Taf2 = taf(name="developpement2", code="DCL2",description=loremipsum)
+    Taf2 = taf(name="formation ingenieur etudiant", code="Fis", description=loremipsum)
+    Taf5 = taf(name="formation ingenieur logiciel", code="Fil", description=loremipsum)
+    Taf6 = taf(name="formation ingenieur transition", code="Fit", description=loremipsum)
+    Taf7 = taf(name="Master", code="MST", description=loremipsum)
     Taf3 = taf(name="DEMIN*",code="DEMIN*",description=loremipsum)
     Taf4 = taf(name="DEMIN", code="DEMIN",description=loremipsum)
     studentTaf = taf_student(student_id=1,taf_id=1,year=2022)
@@ -60,6 +63,9 @@ def populate_database():
     db.session.add(Student2)
     db.session.add(Student3)
     db.session.add(Taf)
+    db.session.add(Taf5)
+    db.session.add(Taf6)
+    db.session.add(Taf7)
     db.session.add(Taf2)
     db.session.add(Taf3)
     db.session.add(Taf4)
@@ -303,7 +309,8 @@ def tableaux(name):
     TafsTrio =[]
     lastTrio = []
     entiertrio = len(Taf)%3
-    for i in range(0,int((len(Taf)-entiertrio)/3),3):
+    print(int((len(Taf)-entiertrio)/3))
+    for i in range(0,int((len(Taf)-entiertrio)),3):
         TafsTrio += [[Taf[i],Taf[i+1],Taf[i+2]]]
     for j in range((len(Taf)-entiertrio),len(Taf)):
         lastTrio += [Taf[j]]
