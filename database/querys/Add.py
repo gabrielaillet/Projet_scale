@@ -26,7 +26,7 @@ def addStudentid(form):
     save_object_to_db(Student)
     return Student
 def addTaf(form):
-    Taf = taf(name=form.name.data,code=form.code.data,description='# Linguae habeat deus quaeratur ignes tempora regni\n' +
+    Taf = taf(name=form.taf_name.data, code=form.code.data, description='# Linguae habeat deus quaeratur ignes tempora regni\n' +
           '## Et rerum peregrina tamen at longisque mutataque\n' +
           'Lorem markdownum caeloque totidem neque vidit isset repetita aliquisque miseru\n' +
           'solet Erymanthidas cupit relinquit satyros homo qua et edidit. Felicisque regnum' +
@@ -37,12 +37,12 @@ def addTaf(form):
           '> dedit, gravis genibus iamque cunctosque a aptius Surrentino meritis posito ' +
           '> iter fero. Et natorum haec **trahit Tusco**, qua lacerat **suis**, nil balatum ' +
           '> divellite cuspis; dum maius, iuvenem relinquunt. Tenebat committitur poteram ' +
-          '> de exegit abstulit recens percussa deposuit postquam in est corpora artis mea ' +
-          '> gutture dubitat regimen. Nymphis ruptosque illa torum verbenis infectis ' +
-          '> positis!' +
-          'Sequi iterumque usque, flendoque fieret, moles magis artus **ut** fluit ' +
-          '*possent*. Recessu **innumeraeque** artes.' +
-          '## Quamvis cum quin virgo trementi populos metalla')
+                                                                        '> de exegit abstulit recens percussa deposuit postquam in est corpora artis mea ' +
+                                                                        '> gutture dubitat regimen. Nymphis ruptosque illa torum verbenis infectis ' +
+                                                                        '> positis!' +
+                                                                        'Sequi iterumque usque, flendoque fieret, moles magis artus **ut** fluit ' +
+                                                                        '*possent*. Recessu **innumeraeque** artes.' +
+                                                                        '## Quamvis cum quin virgo trementi populos metalla')
     save_object_to_db(Taf)
     print(Taf.description,file=sys.stderr)
     return Taf

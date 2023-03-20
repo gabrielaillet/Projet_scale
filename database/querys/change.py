@@ -28,6 +28,7 @@ def ChangeProfile(form):
         TafListSelected = form.taf3.data
         StudentTaf3 = TafStudentForm(student_id=form.student_id.data, taf_id=getIdTafByCode(TafListSelected).taf_id,
                                      year=str(form.year.data+2))
+        print(StudentTaf3.year)
         addTafStudent(StudentTaf3)
 
     if (form.taf4.data != "pas de taf"):
@@ -58,7 +59,7 @@ def changeClassProm(form):
 
 def changeTaf(form,Taf):
     delTaf(Taf.taf_id)
-    Taf = taf(taf_id=Taf.taf_id,name=form.name.data,code=form.code.data,description=form.description.data)
+    Taf = taf(taf_id=Taf.taf_id, name=form.taf_name.data, code=form.code.data, description=form.description.data)
     save_object_to_db(Taf)
     return Taf
 

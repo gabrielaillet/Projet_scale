@@ -21,11 +21,10 @@ def getTadOfStudentByStudentId(idStudent):
     StudentTaf = taf_student.query.filter_by(student_id=idStudent).all()
     Tafids = []
     for i in range(len(StudentTaf)):
-        Tafids += [StudentTaf[i].taf_id]
+        Tafids += [taf.query.filter_by(taf_id = StudentTaf[i].taf_id).first()]
 
-    tafs = taf.query.filter(taf.taf_id.in_(Tafids)).all()
 
-    return tafs
+    return Tafids
 
 def getPromotionYear():
     PromYear = set()

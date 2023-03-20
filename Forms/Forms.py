@@ -26,9 +26,9 @@ class StudentForm(FlaskForm):
 class TafForm(FlaskForm):
     # id used only by update/edit
     id_field = HiddenField()
-    name = StringField('nom de la taf', [ InputRequired(),
-        Length(min=0, max=25, message="Invalid sock name length")
-        ])
+    taf_name = StringField('nom de la taf', [InputRequired(),
+                                             Length(min=0, max=25, message="Invalid sock name length")
+                                             ])
     code = StringField('code de la taf', [ InputRequired(),
         Length(min=0, max=7, message="Invalid sock name length")
         ])
@@ -80,12 +80,12 @@ class classPromForm(FlaskForm):
 class StageForm(FlaskForm):
     name = StringField('nom entreprise')
     description = TextAreaField('Ajoutez une description')
-    nom = StringField('code')
+    nom = StringField('codetes')
     info_tuteur = TextAreaField('Ajoutez les coordonnées du tuteur')
 
 class ProfileEtudiantForm(FlaskForm):
     student_id = IntegerField()
-    name = StringField('code')
+    name = StringField('codeyesr')
     surname = StringField('code')
     email = StringField('code')
     etat_civil = RadioField('code',choices=[('Mr', 'Mr'), ('Mme', 'Mme'), ('Autre', 'Autre')])
@@ -103,7 +103,7 @@ class ProfileEtudiantForm(FlaskForm):
     taf4 = RadioField('code', choices=[],default="pas de taf",validators=[InputRequired(message="Please enter taf4")])
 
 class AddNewStudentForm(FlaskForm):
-    name = StringField('code')
+    Profilename = StringField('code')
     surname = StringField('code')
     email = StringField('code',default="")
     etat_civil = RadioField('code', choices=[('Mr', 'Mr'), ('Mme', 'Mme'), ('Autre', 'Autre')])

@@ -27,7 +27,7 @@
                             {{ formTaf.hidden_tag() }}
                             <div>
                                 {{formTaf.code }}
-                                {{formTaf.name }}
+                                {{formTaf.taf_name }}
                             </div>
                             <input type="submit">
                         </form>
@@ -70,7 +70,7 @@
                         <form action="{{url_for("adminTab",name=name)}}" method="post">
                              {{ NewStudentForm.hidden_tag() }}
                             <div>
-                                {{ NewStudentForm.name }}
+                                {{ NewStudentForm.Profilename }}
                                 {{ NewStudentForm.surname }}
                                 {{ NewStudentForm.year }}
                                 {{ NewStudentForm.taf1 }}
