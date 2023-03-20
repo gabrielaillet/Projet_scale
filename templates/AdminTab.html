@@ -7,6 +7,15 @@
       rel="stylesheet"
       integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD"
       crossorigin="anonymous">
+    <!-- style of Stringfield -->
+<style>.form-control-lg {
+  font-size: 1rem; /* diminue la taille de police */
+  padding: .5rem .75rem; /* ajuste l'espacement interne */
+  height: calc(0.5em + 1.25rem + 2px); /* ajuste la hauteur pour aligner le texte */
+  line-height: 0.4; /* ajuste la hauteur de ligne */
+}
+</style>
+
 
     {% import 'navBar.jinja2' as nav %}
 </head>
@@ -18,43 +27,50 @@
     <div class="container">
         <div class="row justify-content-center">
                     <div class="col-12">
-            <br>
             <h1 class="text-center">Fonctionnalités Admin</h1>
         </div>
             <div class="col-12 col-md-4">
             <br>
                 <div class="card">
                     <div class="text-center"><strong>Taf</strong></div>
-                    <div class="card-body">
+                    <div class="card-body text-center">
                     {% for taf in Tafs %}
-                        <a class="link-dark taf" href="{{url_for("ShowTaf",name=name,TafCode=taf.code,id=id )}}">{{  taf.code}}</a>
+                        <a href="{{url_for("ShowTaf",name=name,TafCode=taf.code,id=id )}}">{{  taf.code}}</a>
                     {% endfor %}
                         <form action="{{url_for("adminTab",name=name)}}" method="post">
                             {{ formTaf.hidden_tag() }}
-                            <div>
+                        </div>
+                            <div class="card-body">
                                 <label>Nom de la TAF : </label>
-                                {{formTaf.code }}
+                                {{formTaf.code(class="form-control-lg") }}
+                                <br>
+                                <br>
                                 <label>Abréviation : </label>
-                                {{formTaf.taf_name }}
+                                {{formTaf.taf_name(class="form-control-lg") }}
                             </div>
+                            <div class="card-body text-center">
                             <input class="btn btn-outline-success" type="submit" value="Créer">
+                                </div>
                         </form>
-                    </div>
                 </div>
                             <div class="card">
                     <div class="text-center"><strong>Promo</strong></div>
                     <div class="card-body">
                         <form action="{{url_for("adminTab",name=name)}}" method="post">
                                     {{ formClassProm.hidden_tag() }}
+
+                                <label>Elève : </label>
+                                {{formClassProm.student(class="form-control-lg") }}
                             <div>
-                                {{formClassProm.year }}
+                                <br>
+                                <label>Année de promotion : </label>
+                                {{formClassProm.year(class="form-control-lg") }}
                             </div>
-
-                                {{formClassProm.student }}
-
-                            <input type="submit">
+                            </div>
+                            <div class="card-body text-center">
+                            <input class="btn btn-outline-success" type="submit" value="Modifier">
+                                </div>
                         </form>
-                    </div>
                 </div>
                 <div class="card">
                     <div class="text-center"><strong>Creer une nouvelle entreprise</strong></div>
@@ -62,30 +78,49 @@
                         <form action="{{url_for("adminTab",name=name)}}" method="post">
                                     {{ entrepriseForm.hidden_tag() }}
                             <div>
-                                {{entrepriseForm.name }}
+                                <label>Nom de l'entreprise : </label>
+                                {{entrepriseForm.name(class="form-control-lg") }}
                             </div>
-                            <input type="submit">
+                            </div>
+                            <div class="card-body text-center">
+                            <input class="btn btn-outline-success" type="submit" value="Créer">
+                                </div>
                         </form>
-                    </div>
                 </div>
 
             </div>
             <div class="col-12 col-md-4">
                 <br>
                 <div class="card">
-                    <div class="text-center"><strong>Ajouter nouvel éleve</strong></div>
+                    <div class="text-center"><strong>Ajouter un nouvel éleve</strong></div>
                     <div class="card-body">
                         <form action="{{url_for("adminTab",name=name)}}" method="post">
                              {{ NewStudentForm.hidden_tag() }}
+                                <div>
+                                <label>Prénom : </label>
+                                {{ NewStudentForm.Profilename(class="form-control-lg")}}
+                                </div>
+                            <br>
                             <div>
-                                <div><label>Nom :</label> {{ NewStudentForm.Profilename }}</div>
-                                <div><label>Prénom :</label> {{ NewStudentForm.surname }}</div>
-                                <div><label>Promotion :</label> {{ NewStudentForm.year }}</div>
+                                <label>Nom :</label>
+                                {{ NewStudentForm.surname(class="form-control-lg") }}
+                                </div>
+                                <div>
+                                    <br>
+                                <label>Année de promotion : </label>
+                                {{ NewStudentForm.year(class="form-control-lg") }}
+                                    </div>
+                            <div>
                                 {{ NewStudentForm.taf1 }}
                                 {{ NewStudentForm.etat_civil }}
-                               <label>Email : </label>{{ NewStudentForm.email }}
+                                <br>
+                                <label>e-mail : </label>
+                                {{ NewStudentForm.email(class="form-control-lg") }}
                             </div>
-                            <input type="submit">
+                            </div>
+                            <div class="card-body text-center">
+                            <input class="btn btn-outline-success" type="submit" value="Ajouter">
+                                </div>
                         </form>
                     </div>
                 </div>

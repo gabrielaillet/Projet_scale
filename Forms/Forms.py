@@ -107,7 +107,7 @@ class AddNewStudentForm(FlaskForm):
     surname = StringField('code')
     email = StringField('code',default="")
     etat_civil = RadioField('code', choices=[('Mr', 'Mr'), ('Mme', 'Mme'), ('Autre', 'Autre')])
-    taf1 = RadioField('code',choices=[('Master', 'Master'), ('Fil', 'Fil'), ('Fit', 'Fit'),('Fis','Fis')],default="Fis",validators=[InputRequired(message="Please enter taf1")])
+    taf1 = RadioField('code',choices=[('Master', 'Master'), ('FIL', 'FIL'), ('FIT', 'FIT'),('FISE','FISE')],default="Fis",validators=[InputRequired(message="Please enter taf1")])
     current_year = 2015
     year_range = range(current_year, current_year + 30)
     year_choices = [(str(year), str(year)) for year in year_range]
