@@ -112,8 +112,12 @@ def supprimerEntreprise(name,id):
 def EntrepriseTabList(name,idEntreprise):
     Entreprise = entreprise.query.filter_by(entreprise_id = idEntreprise)
     StagesRaw = stage.query.filty_by(entreprise_id = idEntreprise).all()
+    Stages = []
+    for sr in StagesRaw:
+        Student = student.query.filter_by(student_id=sr.student_id).first()
+        Stages += [Student.name,Student.surname,StagesRaw.name]
 
-    return render_template("entrepriseTab.html",Entreprise=Entreprise,name=name,id=1)
+    return render_template("entrepriseTab.html",Entreprise=Entreprise,name=name,id=1,Stages=Stages)
 
 @app.route("/<string:name>/entreprise",methods=["GET", "POST"])
 def EntrepriseTab(name):
@@ -243,7 +247,7 @@ def changeClientInfo(name,id):
 
     Taf = getTadOfStudentByStudentId(id)
     if flask.request.method == 'GET':
-        formProfile = ProfileEtudiantForm(student_id=id, name=Student.Profilename, surname=Student.surname, email=Profile.email,
+        formProfile = ProfileEtudiantForm(student_id=id, name=Student.name, surname=Student.surname, email=Profile.email,
                                           etat_civil=Profile.etat_civil, post=Profile.post, Student=Student)
         tafCode = getTafCode()
         if(len(Taf) >= 1):
