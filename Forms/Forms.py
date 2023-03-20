@@ -115,4 +115,4 @@ class AddNewStudentForm(FlaskForm):
 
 class EntrepriseForm(FlaskForm):
     entreprise_id = IntegerField()
-    name = StringField('code')
+    name = StringField('code',validators=[InputRequired(message="Please enter stm")])

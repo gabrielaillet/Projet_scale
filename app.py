@@ -88,7 +88,7 @@ def populate_database():
 
 app = flask.Flask(__name__)
 app.config["SECRET_KEY"] = "secret_key1234"
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///C:\\Users\\DELL\\Downloads\\ue_web_example-tp_relations_flask\\database\\database.db"
+app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///C:\\Users\\Yves\\Desktop\\WEB\\Projet_scale\\database\\database.db"
 db.init_app(app) # (1) flask prend en compte la base de donnee
 with app.test_request_context(): # (2) bloc execute a l'initialisation de Flask
     init_database()
@@ -206,6 +206,7 @@ def adminTab(name):
         formTafStudent = TafStudentForm()
         formClassProm = classPromForm()
         entrepriseForm = EntrepriseForm()
+        print(entrepriseForm.name.data)
         formClassProm.student.choices = getStudentNameSurnameForForm()
         Tafs = taf.query.all()
         Student = student.query.all()
@@ -228,7 +229,9 @@ def adminTab(name):
                     return redirect(url_for('tableaux',name=name))
                 if(NewStudentForm.validate_on_submit()):
                     addNewStudent(NewStudentForm)
+                    redirect(url_for('adminTab', name=name))
                 if(entrepriseForm.validate_on_submit()):
+                    print(123)
                     if(not checkforSimilarEntreprise(entrepriseForm)):
                         addEntreprise(entrepriseForm)
                         redirect(url_for('EntrepriseTab',name=name))
