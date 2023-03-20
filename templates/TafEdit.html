@@ -8,6 +8,16 @@
   <meta charset="utf-8"/>
   <title>Marked in the browser</title>
     {% import 'navBar.jinja2' as nav %}
+
+    <!-- style of Stringfield -->
+    <style>
+.form-control-lg {
+    font-size: 1rem;
+    line-height: 1.2rem;
+    height: 0.5rem;
+    padding: 0.2rem;
+}
+</style>
 </head>
 
 <header>
@@ -16,15 +26,18 @@
 <body style="background-color:#dee7e6;">
 <br>
 <div class="container">
+    <div class="row justify-content-center">
+        <div class="col-8">
+            <div class="container">
 <form action="{{url_for("editTaf",name=name, TafCode=Taf.code)}}" method="post"}}>
     <div class="row">
         <div class="card">
             <br>
             {{ TafForm.hidden_tag() }}
-        <div class="text-center"><strong>{{TafForm.taf_name}}-{{TafForm.code}}</strong></div>
+        <div class="text-center"><strong>{{TafForm.taf_name(class="form-control-lg")}}-{{TafForm.code(class="form-control-lg")}}</strong></div>
             <div class="card-body text-center">
                 <div id="content">
-                    {{ TafForm.description }}
+                    {{ TafForm.description(class="form-control-lg") }}
                 </div>
             </div>
         </div>
@@ -35,8 +48,12 @@
             </div>
     </div>
 </div>
-  </div>
+
+
+
+        </div>
 </div>
+    </div>
 </form>
 </body>
 </html>
