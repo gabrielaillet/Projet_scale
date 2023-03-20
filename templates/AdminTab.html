@@ -14,9 +14,15 @@
 <header>
             {{ nav.renderNavBar(name,id) }}
 </header>
+<br>
     <div class="container">
-        <div class="row">
+        <div class="row justify-content-center">
+                    <div class="col-12">
+            <br>
+            <h1 class="text-center">Fonctionnalités Admin</h1>
+        </div>
             <div class="col-12 col-md-4">
+            <br>
                 <div class="card">
                     <div class="text-center"><strong>Taf</strong></div>
                     <div class="card-body">
@@ -26,16 +32,16 @@
                         <form action="{{url_for("adminTab",name=name)}}" method="post">
                             {{ formTaf.hidden_tag() }}
                             <div>
+                                <label>Nom de la TAF : </label>
                                 {{formTaf.code }}
+                                <label>Abréviation : </label>
                                 {{formTaf.taf_name }}
                             </div>
-                            <input type="submit">
+                            <input class="btn btn-outline-success" type="submit" value="Créer">
                         </form>
                     </div>
                 </div>
-            </div>
-            <div class="col-12 col-md-4">
-                <div class="card">
+                            <div class="card">
                     <div class="text-center"><strong>Promo</strong></div>
                     <div class="card-body">
                         <form action="{{url_for("adminTab",name=name)}}" method="post">
@@ -62,15 +68,17 @@
                         </form>
                     </div>
                 </div>
+
             </div>
             <div class="col-12 col-md-4">
+                <br>
                 <div class="card">
                     <div class="text-center"><strong>Ajouter nouvel éleve</strong></div>
                     <div class="card-body">
                         <form action="{{url_for("adminTab",name=name)}}" method="post">
                              {{ NewStudentForm.hidden_tag() }}
                             <div>
-                                {{ NewStudentForm.Profilename }}
+                                {{ NewStudentForm.name }}
                                 {{ NewStudentForm.surname }}
                                 {{ NewStudentForm.year }}
                                 {{ NewStudentForm.taf1 }}
