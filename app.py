@@ -11,7 +11,7 @@ from Forms.Forms import *
 from database.querys.Add import *
 from database.models import *
 from database.database import init_database
-from database.querys.Delete import delStudent, delEntreprise
+from database.querys.Delete import delStudent, delEntreprise, delTaf
 from database.querys.change import ChangeProfile, changeClassProm, changeTaf, changeStage
 
 loremipsum = "# Linguae habeat deus quaeratur ignes tempora regni\n " \
@@ -107,6 +107,17 @@ def prom(name):
 def supprimerEntreprise(name,id):
     delEntreprise(id)
     return  redirect(url_for('EntrepriseTab',name=name))
+
+@app.route("/<string:name>/del/taf/<string:TafCode>",methods=["GET", "POST"])
+def supprimerTaf(name,TafCode):
+    Tafid = getIdTafByCode(TafCode).taf_id
+    delTaf(Tafid)
+    tafStudentToRemove= taf_student.query.filter_by(taf_id=Tafid).all()
+    for ts in tafStudentToRemove:
+        db.session.delete(ts)
+        db.session.commit()
+
+    return  redirect(url_for('tableaux',name=name))
 
 @app.route("/<string:name>/entreprise/<int:idEntreprise>",methods=["GET", "POST"])
 def EntrepriseTabList(name,idEntreprise):

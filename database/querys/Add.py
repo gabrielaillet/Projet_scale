@@ -13,7 +13,7 @@ def addStudent(form):
     return Student
 
 def addNewStudent(form):
-    Student = student(name=form.name.data,surname=form.surname.data)
+    Student = student(name=form.Profilename.data,surname=form.surname.data)
     save_object_to_db(Student)
     StudentProfile = profile(student_id = Student.student_id,email=form.email.data,
                              post="étudiant",etat_civil=form.etat_civil.data)
