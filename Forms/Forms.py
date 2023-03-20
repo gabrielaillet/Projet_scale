@@ -39,7 +39,7 @@ class TafForm(FlaskForm):
 class TafFormWithDescription(FlaskForm):
     # id used only by update/edit
     id_field = HiddenField()
-    name = StringField('nom de la taf', [ InputRequired(),
+    taf_name = StringField('nom de la taf', [ InputRequired(),
         Length(min=0, max=25, message="Invalid sock name length")
         ])
     code = StringField('code de la taf', [ InputRequired(),

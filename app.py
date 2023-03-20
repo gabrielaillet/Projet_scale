@@ -160,7 +160,7 @@ def editTaf(name,TafCode):
         Taf = getIdTafByCode(TafCode)
         if(Taf != None):
             if flask.request.method == 'GET':
-                TafForm = TafFormWithDescription(name=Taf.taf_name, code=Taf.code, description=Taf.description)
+                TafForm = TafFormWithDescription(name=Taf.name, code=Taf.code, description=Taf.description)
                 return render_template('TafEdit.html',name=name, Taf=Taf, TafForm=TafForm,id=0)
             if flask.request.method == 'POST':
                 TafForm = TafFormWithDescription()

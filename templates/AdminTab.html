@@ -78,12 +78,12 @@
                         <form action="{{url_for("adminTab",name=name)}}" method="post">
                              {{ NewStudentForm.hidden_tag() }}
                             <div>
-                                {{ NewStudentForm.name }}
-                                {{ NewStudentForm.surname }}
-                                {{ NewStudentForm.year }}
+                                <div><label>Nom :</label> {{ NewStudentForm.Profilename }}</div>
+                                <div><label>Prénom :</label> {{ NewStudentForm.surname }}</div>
+                                <div><label>Promotion :</label> {{ NewStudentForm.year }}</div>
                                 {{ NewStudentForm.taf1 }}
                                 {{ NewStudentForm.etat_civil }}
-                                {{ NewStudentForm.email }}
+                               <label>Email : </label>{{ NewStudentForm.email }}
                             </div>
                             <input type="submit">
                         </form>
