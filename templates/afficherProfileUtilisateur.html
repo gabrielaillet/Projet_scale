@@ -72,7 +72,7 @@
                    <br>
             <div class="card">
             <form action="{{ url_for("addStageTab",id=id , name=name)}}" method="get">
-                      <button type="submit"><strong>Ajouter stage</strong></button>
+                      <button  class="btn btn-success" type="submit"><strong>Ajouter stage</strong></button>
             </form>
                 <div class="accordion" id="accordionExample">
   <div class="accordion-item">
@@ -88,6 +88,7 @@
           <strong>{{ elemt[0].nom }} : {{ elemt[1] }}</strong>
           </a>
           <p>{{ elemt[0].description }}</p>
+          <p>{{ elemt[0].info_tuteur }}</p>
       {% endfor %}
       </div>
   </div>
